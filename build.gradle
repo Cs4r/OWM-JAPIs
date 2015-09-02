@@ -31,7 +31,3 @@ task sourcesJar(type: Jar) {
 artifacts {
     archives javadocJar, sourcesJar
 }
-
-signing {
-    sign configurations.archives
-}
