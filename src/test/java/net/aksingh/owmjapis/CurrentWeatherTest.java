@@ -22,7 +22,12 @@
 
 package net.aksingh.owmjapis;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
+
+import org.junit.Test;
 
 /**
  * <p>
@@ -34,12 +39,20 @@ import java.io.IOException;
  * @since 2.5.0.3
  */
 public class CurrentWeatherTest {
+	
+	private static final String LONDON_UK = "London, UK";
+	private static final String EXPECTED_CITY_NAME = "London";
+	private static final int EXPECTED_CITY_CODE = 2643743;
 
-    public static void main(String[] args) throws IOException {
+	@Test
+    public void testCurrentWeatherByCityNameReturnsValidData() throws IOException {
         OpenWeatherMap owm = new OpenWeatherMap("");
-        CurrentWeather cw = owm.currentWeatherByCityName("London, UK");
-
-        if (!cw.isValid()) {
+        CurrentWeather cw = owm.currentWeatherByCityName(LONDON_UK);
+        
+        boolean validResponse = cw.isValid();
+		assertTrue(validResponse);
+        
+        if (!validResponse) {
             System.out.println("Reponse is inValid!");
         } else {
             System.out.println("Reponse is Valid!");
@@ -55,10 +68,14 @@ public class CurrentWeatherTest {
 
 
             if (cw.hasCityCode()) {
-                System.out.println("City code: " + cw.getCityCode());
+            	long cityCode = cw.getCityCode();
+				assertEquals(EXPECTED_CITY_CODE, cityCode);
+                System.out.println("City code: " + cityCode);
             }
             if (cw.hasCityName()) {
-                System.out.println("City name: " + cw.getCityName());
+                String cityName = cw.getCityName();
+				assertEquals(EXPECTED_CITY_NAME, cityName);
+				System.out.println("City name: " + cityName);
             }
             System.out.println();
         }

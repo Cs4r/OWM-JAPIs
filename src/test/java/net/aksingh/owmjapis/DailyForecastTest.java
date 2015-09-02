@@ -22,7 +22,12 @@
 
 package net.aksingh.owmjapis;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
+
+import org.junit.Test;
 
 /**
  * <p>
@@ -35,11 +40,19 @@ import java.io.IOException;
  */
 public class DailyForecastTest {
 
-    public static void main(String[] args) throws IOException {
+	private static final String LONDON_UK = "London, UK";
+	private static final String EXPECTED_CITY_NAME = "London";
+	private static final int EXPECTED_CITY_CODE = 2643743;
+	
+	@Test
+    public void testDailyForecastByCityNameReturnsValidData() throws IOException {
         OpenWeatherMap owm = new OpenWeatherMap("");
-        DailyForecast df = owm.dailyForecastByCityName("London, UK", Byte.parseByte("5"));
+        DailyForecast df = owm.dailyForecastByCityName(LONDON_UK, Byte.parseByte("5"));
 
-        if (!df.isValid()) {
+        boolean validResponse = df.isValid();
+    	assertTrue(validResponse);
+    	
+		if (!validResponse) {
             System.out.println("Reponse is inValid!");
         } else {
             System.out.println("Reponse is Valid!");
@@ -48,11 +61,16 @@ public class DailyForecastTest {
             if (df.hasCityInstance()) {
                 DailyForecast.City city = df.getCityInstance();
                 if (city.hasCityName()) {
-                    if (city.hasCityCode()) {
-                        System.out.println("City code: " + city.getCityCode());
+                	if (city.hasCityCode()) {
+                    	long cityCode = city.getCityCode();
+        				assertEquals(EXPECTED_CITY_CODE, cityCode);
+                        System.out.println("City code: " + cityCode);
+                        
                     }
                     if (city.hasCityName()) {
-                        System.out.println("City name: " + city.getCityName());
+                        String cityName = city.getCityName();
+        				assertEquals(EXPECTED_CITY_NAME, cityName);
+        				System.out.println("City name: " + cityName);
                     }
                     System.out.println();
                 }
