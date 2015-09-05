@@ -20,17 +20,19 @@
  * THE SOFTWARE.
  */
 
-package net.aksingh.owmjapis;
+package net.aksingh.owmjapis.core;
 
 import org.json.JSONObject;
+
+import net.aksingh.owmjapis.core.AbstractWeather.Coord;
 
 import java.io.Serializable;
 
 /**
  * <p>
  * Provides default behaviours and implementations for:
- * 1. {@link net.aksingh.owmjapis.HourlyForecast}
- * 2. {@link net.aksingh.owmjapis.DailyForecast}
+ * 1. {@link net.aksingh.owmjapis.core.HourlyForecast}
+ * 2. {@link net.aksingh.owmjapis.core.DailyForecast}
  * It defines common methods like <code>has</code>, <code>get</code> and some others.
  * </p>
  *

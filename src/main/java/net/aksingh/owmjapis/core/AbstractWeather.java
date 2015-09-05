@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-package net.aksingh.owmjapis;
+package net.aksingh.owmjapis.core;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * <p>
  * Provides default behaviours and implementations for:
- * 1. {@link net.aksingh.owmjapis.CurrentWeather}
+ * 1. {@link net.aksingh.owmjapis.core.CurrentWeather}
  * It defines common methods like <code>has</code>, <code>get</code> and some others.
  * </p>
  *
@@ -83,7 +83,7 @@ public abstract class AbstractWeather extends AbstractResponse {
         }
 
         JSONArray weatherArray = (jsonObj != null) ? jsonObj.optJSONArray(JSON_WEATHER) : new JSONArray();
-        this.weatherList = (weatherArray != null) ? new ArrayList<Weather>(weatherArray.length()) : Collections.EMPTY_LIST;
+        this.weatherList = (weatherArray != null) ? new ArrayList<Weather>(weatherArray.length()) : Collections.<Weather>emptyList();
         if (weatherArray != null && this.weatherList != Collections.EMPTY_LIST) {
             for (int i = 0; i < weatherArray.length(); i++) {
                 JSONObject weatherObj = weatherArray.optJSONObject(i);

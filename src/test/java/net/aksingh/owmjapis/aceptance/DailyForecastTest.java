@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-package net.aksingh.owmjapis;
+package net.aksingh.owmjapis.aceptance;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -28,6 +28,9 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 
 import org.junit.Test;
+
+import net.aksingh.owmjapis.OpenWeatherMap;
+import net.aksingh.owmjapis.core.DailyForecast;
 
 /**
  * <p>
@@ -38,30 +41,30 @@ import org.junit.Test;
  * @version 2015/01/22
  * @since 2.5.0.3
  */
-public class HourlyForecastTest {
+public class DailyForecastTest {
 
 	private static final String LONDON_UK = "London, UK";
 	private static final String EXPECTED_CITY_NAME = "London";
 	private static final int EXPECTED_CITY_CODE = 2643743;
 	
 	@Test
-    public void testHourlyForecastByCityNameReturnsValidData() throws IOException {
+    public void testDailyForecastByCityNameReturnsValidData() throws IOException {
         OpenWeatherMap owm = new OpenWeatherMap("");
-        HourlyForecast hf = owm.hourlyForecastByCityName(LONDON_UK);
+        DailyForecast df = owm.dailyForecastByCityName(LONDON_UK, Byte.parseByte("5"));
 
-        boolean validResponse = hf.isValid();
+        boolean validResponse = df.isValid();
     	assertTrue(validResponse);
-
-    	if (!validResponse) {
+    	
+		if (!validResponse) {
             System.out.println("Reponse is inValid!");
         } else {
             System.out.println("Reponse is Valid!");
             System.out.println();
 
-            if (hf.hasCityInstance()) {
-                HourlyForecast.City city = hf.getCityInstance();
+            if (df.hasCityInstance()) {
+                DailyForecast.City city = df.getCityInstance();
                 if (city.hasCityName()) {
-                    if (city.hasCityCode()) {
+                	if (city.hasCityCode()) {
                     	long cityCode = city.getCityCode();
         				assertEquals(EXPECTED_CITY_CODE, cityCode);
                         System.out.println("City code: " + cityCode);
@@ -76,11 +79,11 @@ public class HourlyForecastTest {
                 }
             }
 
-            System.out.println("Total forecast instances: " + hf.getForecastCount());
+            System.out.println("Total forecast instances: " + df.getForecastCount());
             System.out.println();
 
-            for (int i = 0; i < hf.getForecastCount(); i++) {
-                HourlyForecast.Forecast forecast = hf.getForecastInstance(i);
+            for (int i = 0; i < df.getForecastCount(); i++) {
+                DailyForecast.Forecast forecast = df.getForecastInstance(i);
 
                 System.out.println("*** Forecast instance number " + (i+1) + " ***");
 

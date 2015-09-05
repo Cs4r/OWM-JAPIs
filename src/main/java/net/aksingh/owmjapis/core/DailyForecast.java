@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-package net.aksingh.owmjapis;
+package net.aksingh.owmjapis.core;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -60,7 +60,7 @@ public class DailyForecast extends AbstractForecast {
     /*
     Constructors
      */
-    DailyForecast(JSONObject jsonObj) {
+    public DailyForecast(JSONObject jsonObj) {
         super(jsonObj);
 
         JSONArray dataArray = (jsonObj != null) ? jsonObj.optJSONArray(JSON_FORECAST_LIST) : new JSONArray();

@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-package net.aksingh.owmjapis;
+package net.aksingh.owmjapis.core;
 
 import org.json.JSONObject;
 
@@ -77,7 +77,7 @@ public class CurrentWeather extends AbstractWeather {
     /*
     Constructor
      */
-    CurrentWeather(JSONObject jsonObj) {
+    public CurrentWeather(JSONObject jsonObj) {
         super(jsonObj);
 
         this.base = (jsonObj != null) ? jsonObj.optString(JSON_BASE, null) : null;
