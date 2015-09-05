@@ -25,17 +25,15 @@ package net.aksingh.owmjapis;
 import java.io.IOException;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import net.aksingh.owmjapis.core.CurrentWeather;
 import net.aksingh.owmjapis.core.DailyForecast;
 import net.aksingh.owmjapis.core.HourlyForecast;
 import net.aksingh.owmjapis.core.OWMLanguage;
-import net.aksingh.owmjapis.core.OWMAddress;
-import net.aksingh.owmjapis.core.OWMProxy;
-import net.aksingh.owmjapis.core.OWMResponse;
 import net.aksingh.owmjapis.core.OWMUnits;
-import net.aksingh.owmjapis.core.impl.OWMAddress_V_2_5;
+import net.aksingh.owmjapis.core.ProxyInfo;
+import net.aksingh.owmjapis.core.WeatherProvider;
+import net.aksingh.owmjapis.core.impl.WeatherProviderImpl;
 
 /**
  * <p>
@@ -64,9 +62,11 @@ public class OpenWeatherMap {
 	/*
 	 * Instance Variables
 	 */
-	private final OWMAddress owmAddress;
-	private final OWMResponse owmResponse;
-	private final OWMProxy owmProxy;
+	private WeatherProvider weatherProvider;
+	private OWMUnits units;
+	private OWMLanguage lang;
+	private String apiKey;
+	private ProxyInfo proxyInfo;
 
 	/**
 	 * Constructor
@@ -109,32 +109,25 @@ public class OpenWeatherMap {
 	 * @see <a href="http://openweathermap.org/appid">OWM.org's API Key</a>
 	 */
 	public OpenWeatherMap(OWMUnits units, OWMLanguage lang, String apiKey) {
-		this.owmAddress = new OWMAddress_V_2_5(units, lang, apiKey);
-		this.owmProxy = new OWMProxy(null, Integer.MIN_VALUE, null, null);
-		this.owmResponse = new OWMResponse(owmAddress, owmProxy);
+		this.weatherProvider = new WeatherProviderImpl(units, lang, apiKey);
+		this.units = units;
+		this.lang = lang;
+		this.apiKey = apiKey;
 	}
 
 	/*
 	 * Getters
 	 */
-	public OWMAddress getOwmAddressInstance() {
-		return owmAddress;
-	}
-
 	public String getApiKey() {
-		return owmAddress.getAppId();
+		return apiKey;
 	}
 
 	public OWMUnits getUnits() {
-		return owmAddress.getUnits();
-	}
-
-	public String getMode() {
-		return owmAddress.getMode();
+		return units;
 	}
 
 	public OWMLanguage getLang() {
-		return owmAddress.getLang();
+		return lang;
 	}
 
 	/*
@@ -149,20 +142,14 @@ public class OpenWeatherMap {
 	 * @see net.aksingh.owmjapis.core.OWMUnits
 	 */
 	public void setUnits(OWMUnits units) {
-		owmAddress.setUnits(units);
+		if (proxyInfo != null) {
+			weatherProvider = new WeatherProviderImpl(units, lang, apiKey, proxyInfo);
+		} else {
+			weatherProvider = new WeatherProviderImpl(units, lang, apiKey);
+		}
+		this.units = units;
 	}
-
-	/**
-	 * Set API key for getting data from OWM.org
-	 *
-	 * @param appId
-	 *            API key from OWM.org
-	 * @see <a href="http://openweathermap.org/appid">OWM.org's API Key</a>
-	 */
-	public void setApiKey(String appId) {
-		owmAddress.setAppId(appId);
-	}
-
+	
 	/**
 	 * Set language for getting data from OWM.org
 	 *
@@ -173,7 +160,28 @@ public class OpenWeatherMap {
 	 *      Multilingual support</a>
 	 */
 	public void setLang(OWMLanguage lang) {
-		owmAddress.setLang(lang);
+		if (proxyInfo != null) {
+			weatherProvider = new WeatherProviderImpl(units, lang, apiKey, proxyInfo);
+		} else {
+			weatherProvider = new WeatherProviderImpl(units, lang, apiKey);
+		}
+		this.lang = lang;
+	}
+
+	/**
+	 * Set API key for getting data from OWM.org
+	 *
+	 * @param apiKey
+	 *            API key from OWM.org
+	 * @see <a href="http://openweathermap.org/appid">OWM.org's API Key</a>
+	 */
+	public void setApiKey(String apiKey) {
+		if (proxyInfo != null) {
+			weatherProvider = new WeatherProviderImpl(units, lang, apiKey, proxyInfo);
+		} else {
+			weatherProvider = new WeatherProviderImpl(units, lang, apiKey);
+		}
+		this.apiKey = apiKey;
 	}
 
 	/**
@@ -185,10 +193,8 @@ public class OpenWeatherMap {
 	 *            Port address of the proxy
 	 */
 	public void setProxy(String ip, int port) {
-		owmProxy.setIp(ip);
-		owmProxy.setPort(port);
-		owmProxy.setUser(null);
-		owmProxy.setPass(null);
+		proxyInfo = new ProxyInfo(ip, port, null, null);
+		weatherProvider = new WeatherProviderImpl(units, lang, apiKey, proxyInfo);
 	}
 
 	/**
@@ -204,87 +210,59 @@ public class OpenWeatherMap {
 	 *            Password for the proxy if required
 	 */
 	public void setProxy(String ip, int port, String user, String pass) {
-		owmProxy.setIp(ip);
-		owmProxy.setPort(port);
-		owmProxy.setUser(user);
-		owmProxy.setPass(pass);
+		proxyInfo = new ProxyInfo(ip, port, user, pass);
+		weatherProvider = new WeatherProviderImpl(units, lang, apiKey, proxyInfo);
 	}
 
 	public CurrentWeather currentWeatherByCityName(String cityName) throws IOException, JSONException {
-		String response = owmResponse.currentWeatherByCityName(cityName);
-		return this.currentWeatherFromRawResponse(response);
+		return weatherProvider.currentWeatherByCityName(cityName);
 	}
 
 	public CurrentWeather currentWeatherByCityName(String cityName, String countryCode)
 			throws IOException, JSONException {
-		String response = owmResponse.currentWeatherByCityName(cityName, countryCode);
-		return this.currentWeatherFromRawResponse(response);
+		return weatherProvider.currentWeatherByCityName(cityName, countryCode);
 	}
 
 	public CurrentWeather currentWeatherByCityCode(long cityCode) throws JSONException {
-		String response = owmResponse.currentWeatherByCityCode(cityCode);
-		return this.currentWeatherFromRawResponse(response);
+		return weatherProvider.currentWeatherByCityCode(cityCode);
 	}
 
 	public CurrentWeather currentWeatherByCoordinates(float latitude, float longitude) throws JSONException {
-		String response = owmResponse.currentWeatherByCoordinates(latitude, longitude);
-		return this.currentWeatherFromRawResponse(response);
-	}
-
-	public CurrentWeather currentWeatherFromRawResponse(String response) throws JSONException {
-		JSONObject jsonObj = (response != null) ? new JSONObject(response) : null;
-		return new CurrentWeather(jsonObj);
+		return weatherProvider.currentWeatherByCoordinates(latitude, longitude);
 	}
 
 	public HourlyForecast hourlyForecastByCityName(String cityName) throws IOException, JSONException {
-		String response = owmResponse.hourlyForecastByCityName(cityName);
-		return this.hourlyForecastFromRawResponse(response);
+		return weatherProvider.hourlyForecastByCityName(cityName);
 	}
 
 	public HourlyForecast hourlyForecastByCityName(String cityName, String countryCode)
 			throws IOException, JSONException {
-		String response = owmResponse.hourlyForecastByCityName(cityName, countryCode);
-		return this.hourlyForecastFromRawResponse(response);
+		return weatherProvider.hourlyForecastByCityName(cityName, countryCode);
 	}
 
 	public HourlyForecast hourlyForecastByCityCode(long cityCode) throws JSONException {
-		String response = owmResponse.hourlyForecastByCityCode(cityCode);
-		return this.hourlyForecastFromRawResponse(response);
+		return weatherProvider.hourlyForecastByCityCode(cityCode);
 	}
 
 	public HourlyForecast hourlyForecastByCoordinates(float latitude, float longitude) throws JSONException {
-		String response = owmResponse.hourlyForecastByCoordinates(latitude, longitude);
-		return this.hourlyForecastFromRawResponse(response);
-	}
-
-	public HourlyForecast hourlyForecastFromRawResponse(String response) throws JSONException {
-		JSONObject jsonObj = (response != null) ? new JSONObject(response) : null;
-		return new HourlyForecast(jsonObj);
+		return weatherProvider.hourlyForecastByCoordinates(latitude, longitude);
 	}
 
 	public DailyForecast dailyForecastByCityName(String cityName, byte count) throws IOException, JSONException {
-		String response = owmResponse.dailyForecastByCityName(cityName, count);
-		return this.dailyForecastFromRawResponse(response);
+		return weatherProvider.dailyForecastByCityName(cityName, count);
 	}
 
 	public DailyForecast dailyForecastByCityName(String cityName, String countryCode, byte count)
 			throws IOException, JSONException {
-		String response = owmResponse.dailyForecastByCityName(cityName, countryCode, count);
-		return this.dailyForecastFromRawResponse(response);
+		return weatherProvider.dailyForecastByCityName(cityName, countryCode, count);
 	}
 
 	public DailyForecast dailyForecastByCityCode(long cityCode, byte count) throws JSONException {
-		String response = owmResponse.dailyForecastByCityCode(cityCode, count);
-		return this.dailyForecastFromRawResponse(response);
+		return weatherProvider.dailyForecastByCityCode(cityCode, count);
 	}
 
 	public DailyForecast dailyForecastByCoordinates(float latitude, float longitude, byte count) throws JSONException {
-		String response = owmResponse.dailyForecastByCoordinates(latitude, longitude, count);
-		return this.dailyForecastFromRawResponse(response);
+		return weatherProvider.dailyForecastByCoordinates(latitude, longitude, count);
 	}
 
-	public DailyForecast dailyForecastFromRawResponse(String response) throws JSONException {
-		JSONObject jsonObj = (response != null) ? new JSONObject(response) : null;
-		return new DailyForecast(jsonObj);
-	}
 }
