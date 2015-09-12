@@ -30,7 +30,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import net.aksingh.owmjapis.OpenWeatherMap;
-import net.aksingh.owmjapis.core.HourlyForecast;
+import net.aksingh.owmjapis.domain.HourlyForecast;
 import net.aksingh.owmjapis.exception.WeatherNotFoundException;
 
 /**

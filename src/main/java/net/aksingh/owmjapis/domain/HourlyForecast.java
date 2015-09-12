@@ -20,15 +20,15 @@
  * THE SOFTWARE.
  */
 
-package net.aksingh.owmjapis.core;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+package net.aksingh.owmjapis.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * <p>
@@ -64,7 +64,7 @@ public class HourlyForecast extends AbstractForecast {
         super(jsonObj);
 
         JSONArray forecastArr = (jsonObj != null) ? jsonObj.optJSONArray(this.JSON_FORECAST_LIST) : new JSONArray();
-        this.forecastList = (forecastArr != null) ? new ArrayList<Forecast>(forecastArr.length()) : Collections.EMPTY_LIST;
+        this.forecastList = (forecastArr != null) ? new ArrayList<Forecast>(forecastArr.length()) : Collections.<Forecast>emptyList();
         if (forecastArr != null && this.forecastList != Collections.EMPTY_LIST) {
             for (int i = 0; i < forecastArr.length(); i++) {
                 JSONObject forecastObj = forecastArr.optJSONObject(i);

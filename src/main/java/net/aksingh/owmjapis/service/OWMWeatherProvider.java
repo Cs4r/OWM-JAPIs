@@ -20,8 +20,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.aksingh.owmjapis.core;
+package net.aksingh.owmjapis.service;
 
+import net.aksingh.owmjapis.domain.CurrentWeather;
+import net.aksingh.owmjapis.domain.DailyForecast;
+import net.aksingh.owmjapis.domain.HourlyForecast;
 import net.aksingh.owmjapis.exception.WeatherNotFoundException;
 
 /**

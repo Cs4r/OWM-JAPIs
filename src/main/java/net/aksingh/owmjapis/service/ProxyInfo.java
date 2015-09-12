@@ -20,43 +20,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.aksingh.owmjapis.core;
+package net.aksingh.owmjapis.service;
 
 /**
- * Languages that can be set for getting data from OWM.org
+ * Stores basic information about proxy's configuration. Objects of this class
+ * are immutable.
+ * 
+ * @author cs4r
  *
- * @since 2.5.0.3
  */
-public enum OWMLanguage {
-	//@formatter:off
-	ENGLISH("en"), 
-	RUSSIAN("ru"), 
-	ITALIAN("it"), 
-	SPANISH("es"), 
-	UKRAINIAN("uk"), 
-	GERMAN("de"), 
-	PORTUGUESE("pt"), 
-	ROMANIAN("ro"), 
-	POLISH("pl"), 
-	FINNISH("fi"), 
-	DUTCH("nl"), 
-	FRENCH("FR"), 
-	BULGARIAN("bg"), 
-	SWEDISH("sv"),
-	CHINESE_TRADITIONAL("zh_tw"), 
-	CHINESE_SIMPLIFIED("zh"), 
-	TURKISH("tr"), 
-	CROATIAN("hr"), 
-	CATALAN("ca");
-	//@formatter:on
+public class ProxyInfo {
+	public final String ip;
+	public final int port;
+	public final String user;
+	public final String pass;
 
-	private final String lang;
-
-	OWMLanguage(String lang) {
-		this.lang = lang;
+	public ProxyInfo(String ip, int port, String user, String pass) {
+		this.ip = ip;
+		this.port = port;
+		this.user = user;
+		this.pass = pass;
 	}
 
-	public String getCode() {
-		return lang;
-	}
 }

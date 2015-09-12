@@ -20,7 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.aksingh.owmjapis.core;
+package net.aksingh.owmjapis.service.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,12 +32,15 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
+import net.aksingh.owmjapis.service.OWMAddress;
+import net.aksingh.owmjapis.service.OWMProxy;
+
 /**
  * Requests OWM.org for data and provides back the incoming response.
  *
  * @since 2.5.0.3
  */
-public class OWMResponse {
+public final class OWMResponse {
 	private final OWMAddress owmAddress;
 	private final OWMProxy owmProxy;
 

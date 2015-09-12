@@ -20,27 +20,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.aksingh.owmjapis.core;
+package net.aksingh.owmjapis.service;
 
 /**
- * Units that can be set for getting data from OWM.org
+ * Languages that can be set for getting data from OWM.org
  *
  * @since 2.5.0.3
  */
-public enum OWMUnits {
+public enum OWMLanguage {
 	//@formatter:off
-	METRIC("metric"), 
-	IMPERIAL("imperial");
+	ENGLISH("en"), 
+	RUSSIAN("ru"), 
+	ITALIAN("it"), 
+	SPANISH("es"), 
+	UKRAINIAN("uk"), 
+	GERMAN("de"), 
+	PORTUGUESE("pt"), 
+	ROMANIAN("ro"), 
+	POLISH("pl"), 
+	FINNISH("fi"), 
+	DUTCH("nl"), 
+	FRENCH("FR"), 
+	BULGARIAN("bg"), 
+	SWEDISH("sv"),
+	CHINESE_TRADITIONAL("zh_tw"), 
+	CHINESE_SIMPLIFIED("zh"), 
+	TURKISH("tr"), 
+	CROATIAN("hr"), 
+	CATALAN("ca");
 	//@formatter:on
-	
-	private final String unit;
 
-	OWMUnits(String unit) {
-		this.unit = unit;
+	private final String lang;
+
+	OWMLanguage(String lang) {
+		this.lang = lang;
 	}
 
 	public String getCode() {
-		return unit;
+		return lang;
 	}
-
 }

@@ -22,15 +22,15 @@
 
 package net.aksingh.owmjapis;
 
-import net.aksingh.owmjapis.core.CurrentWeather;
-import net.aksingh.owmjapis.core.DailyForecast;
-import net.aksingh.owmjapis.core.HourlyForecast;
-import net.aksingh.owmjapis.core.OWMLanguage;
-import net.aksingh.owmjapis.core.OWMUnits;
-import net.aksingh.owmjapis.core.ProxyInfo;
-import net.aksingh.owmjapis.core.OWMWeatherProvider;
-import net.aksingh.owmjapis.core.impl.OWMWeatherProvider_V_2_5;
+import net.aksingh.owmjapis.domain.CurrentWeather;
+import net.aksingh.owmjapis.domain.DailyForecast;
+import net.aksingh.owmjapis.domain.HourlyForecast;
 import net.aksingh.owmjapis.exception.WeatherNotFoundException;
+import net.aksingh.owmjapis.service.OWMLanguage;
+import net.aksingh.owmjapis.service.OWMUnits;
+import net.aksingh.owmjapis.service.OWMWeatherProvider;
+import net.aksingh.owmjapis.service.ProxyInfo;
+import net.aksingh.owmjapis.service.impl.OWMWeatherProvider_V_2_5;
 
 /**
  * <p>
@@ -83,7 +83,7 @@ public class OpenWeatherMap {
 	 *            Any constant from Units
 	 * @param apiKey
 	 *            API key from OWM.org
-	 * @see net.aksingh.owmjapis.core.OWMUnits
+	 * @see net.aksingh.owmjapis.service.OWMUnits
 	 * @see <a href="http://openweathermap.org/appid">OWM.org API Key</a>
 	 */
 	public OpenWeatherMap(OWMUnits units, String apiKey) {
@@ -99,8 +99,8 @@ public class OpenWeatherMap {
 	 *            Any constant from Language
 	 * @param apiKey
 	 *            API key from OWM.org
-	 * @see net.aksingh.owmjapis.core.OWMUnits
-	 * @see net.aksingh.owmjapis.core.OWMLanguage
+	 * @see net.aksingh.owmjapis.service.OWMUnits
+	 * @see net.aksingh.owmjapis.service.OWMLanguage
 	 * @see <a href="http://openweathermap.org/current#multi">OWM.org's
 	 *      Multilingual support</a>
 	 * @see <a href="http://openweathermap.org/appid">OWM.org's API Key</a>
@@ -136,7 +136,7 @@ public class OpenWeatherMap {
 	 *
 	 * @param units
 	 *            Any constant from Units
-	 * @see net.aksingh.owmjapis.core.OWMUnits
+	 * @see net.aksingh.owmjapis.service.OWMUnits
 	 */
 	public void setUnits(OWMUnits units) {
 		if (proxyInfo != null) {
@@ -152,7 +152,7 @@ public class OpenWeatherMap {
 	 *
 	 * @param lang
 	 *            Any constant from Language
-	 * @see net.aksingh.owmjapis.core.OWMLanguage
+	 * @see net.aksingh.owmjapis.service.OWMLanguage
 	 * @see <a href="http://openweathermap.org/current#multi">OWM.org's
 	 *      Multilingual support</a>
 	 */

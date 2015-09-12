@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import net.aksingh.owmjapis.OpenWeatherMap;
-import net.aksingh.owmjapis.core.CurrentWeather;
+import net.aksingh.owmjapis.domain.CurrentWeather;
 import net.aksingh.owmjapis.exception.WeatherNotFoundException;
 
 /**

@@ -20,26 +20,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.aksingh.owmjapis.core;
+package net.aksingh.owmjapis.service;
 
 /**
- * Stores basic information about proxy's configuration. Objects of this class
- * are immutable.
- * 
- * @author cs4r
+ * Units that can be set for getting data from OWM.org
  *
+ * @since 2.5.0.3
  */
-public class ProxyInfo {
-	public final String ip;
-	public final int port;
-	public final String user;
-	public final String pass;
+public enum OWMUnits {
+	//@formatter:off
+	METRIC("metric"), 
+	IMPERIAL("imperial");
+	//@formatter:on
+	
+	private final String unit;
 
-	public ProxyInfo(String ip, int port, String user, String pass) {
-		this.ip = ip;
-		this.port = port;
-		this.user = user;
-		this.pass = pass;
+	OWMUnits(String unit) {
+		this.unit = unit;
+	}
+
+	public String getCode() {
+		return unit;
 	}
 
 }

@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-package net.aksingh.owmjapis.core;
+package net.aksingh.owmjapis.domain;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * <p>
  * Provides default behaviours and implementations for:
- * 1. {@link net.aksingh.owmjapis.core.CurrentWeather}
+ * 1. {@link net.aksingh.owmjapis.domain.CurrentWeather}
  * It defines common methods like <code>has</code>, <code>get</code> and some others.
  * </p>
  *

@@ -20,21 +20,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.aksingh.owmjapis.core.impl;
+package net.aksingh.owmjapis.service.impl;
 
 import org.json.JSONObject;
 
-import net.aksingh.owmjapis.core.CurrentWeather;
-import net.aksingh.owmjapis.core.DailyForecast;
-import net.aksingh.owmjapis.core.HourlyForecast;
-import net.aksingh.owmjapis.core.OWMAddress;
-import net.aksingh.owmjapis.core.OWMLanguage;
-import net.aksingh.owmjapis.core.OWMProxy;
-import net.aksingh.owmjapis.core.OWMResponse;
-import net.aksingh.owmjapis.core.OWMUnits;
-import net.aksingh.owmjapis.core.ProxyInfo;
-import net.aksingh.owmjapis.core.OWMWeatherProvider;
+import net.aksingh.owmjapis.domain.CurrentWeather;
+import net.aksingh.owmjapis.domain.DailyForecast;
+import net.aksingh.owmjapis.domain.HourlyForecast;
 import net.aksingh.owmjapis.exception.WeatherNotFoundException;
+import net.aksingh.owmjapis.service.OWMAddress;
+import net.aksingh.owmjapis.service.OWMLanguage;
+import net.aksingh.owmjapis.service.OWMProxy;
+import net.aksingh.owmjapis.service.OWMUnits;
+import net.aksingh.owmjapis.service.OWMWeatherProvider;
+import net.aksingh.owmjapis.service.ProxyInfo;
 
 /**
  * Implementation of {@link OWMWeatherProvider} for OpenWeatherMap API 2.5

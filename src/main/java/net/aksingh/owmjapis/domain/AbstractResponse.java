@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-package net.aksingh.owmjapis.core;
+package net.aksingh.owmjapis.domain;
 
 import org.json.JSONObject;
 
