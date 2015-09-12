@@ -31,6 +31,7 @@ import org.junit.Test;
 
 import net.aksingh.owmjapis.OpenWeatherMap;
 import net.aksingh.owmjapis.core.DailyForecast;
+import net.aksingh.owmjapis.exception.WeatherNotFoundException;
 
 /**
  * <p>
@@ -49,7 +50,7 @@ public class DailyForecastTest {
 	private static final int EXPECTED_CITY_CODE = 2643743;
 	
 	@Test
-    public void testDailyForecastByCityNameReturnsValidData() throws IOException {
+    public void testDailyForecastByCityNameReturnsValidData() throws WeatherNotFoundException {
         OpenWeatherMap owm = new OpenWeatherMap("");
         DailyForecast df = owm.dailyForecastByCityName(LONDON_UK, Byte.parseByte("5"));
 

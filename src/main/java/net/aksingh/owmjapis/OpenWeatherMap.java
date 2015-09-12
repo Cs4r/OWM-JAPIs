@@ -22,18 +22,15 @@
 
 package net.aksingh.owmjapis;
 
-import java.io.IOException;
-
-import org.json.JSONException;
-
 import net.aksingh.owmjapis.core.CurrentWeather;
 import net.aksingh.owmjapis.core.DailyForecast;
 import net.aksingh.owmjapis.core.HourlyForecast;
 import net.aksingh.owmjapis.core.OWMLanguage;
 import net.aksingh.owmjapis.core.OWMUnits;
 import net.aksingh.owmjapis.core.ProxyInfo;
-import net.aksingh.owmjapis.core.WeatherProvider;
-import net.aksingh.owmjapis.core.impl.WeatherProviderImpl;
+import net.aksingh.owmjapis.core.OWMWeatherProvider;
+import net.aksingh.owmjapis.core.impl.OWMWeatherProvider_V_2_5;
+import net.aksingh.owmjapis.exception.WeatherNotFoundException;
 
 /**
  * <p>
@@ -62,7 +59,7 @@ public class OpenWeatherMap {
 	/*
 	 * Instance Variables
 	 */
-	private WeatherProvider weatherProvider;
+	private OWMWeatherProvider omwWeatherProvider;
 	private OWMUnits units;
 	private OWMLanguage lang;
 	private String apiKey;
@@ -109,7 +106,7 @@ public class OpenWeatherMap {
 	 * @see <a href="http://openweathermap.org/appid">OWM.org's API Key</a>
 	 */
 	public OpenWeatherMap(OWMUnits units, OWMLanguage lang, String apiKey) {
-		this.weatherProvider = new WeatherProviderImpl(units, lang, apiKey);
+		this.omwWeatherProvider = new OWMWeatherProvider_V_2_5(units, lang, apiKey);
 		this.units = units;
 		this.lang = lang;
 		this.apiKey = apiKey;
@@ -143,13 +140,13 @@ public class OpenWeatherMap {
 	 */
 	public void setUnits(OWMUnits units) {
 		if (proxyInfo != null) {
-			weatherProvider = new WeatherProviderImpl(units, lang, apiKey, proxyInfo);
+			omwWeatherProvider = new OWMWeatherProvider_V_2_5(units, lang, apiKey, proxyInfo);
 		} else {
-			weatherProvider = new WeatherProviderImpl(units, lang, apiKey);
+			omwWeatherProvider = new OWMWeatherProvider_V_2_5(units, lang, apiKey);
 		}
 		this.units = units;
 	}
-	
+
 	/**
 	 * Set language for getting data from OWM.org
 	 *
@@ -161,9 +158,9 @@ public class OpenWeatherMap {
 	 */
 	public void setLang(OWMLanguage lang) {
 		if (proxyInfo != null) {
-			weatherProvider = new WeatherProviderImpl(units, lang, apiKey, proxyInfo);
+			omwWeatherProvider = new OWMWeatherProvider_V_2_5(units, lang, apiKey, proxyInfo);
 		} else {
-			weatherProvider = new WeatherProviderImpl(units, lang, apiKey);
+			omwWeatherProvider = new OWMWeatherProvider_V_2_5(units, lang, apiKey);
 		}
 		this.lang = lang;
 	}
@@ -177,9 +174,9 @@ public class OpenWeatherMap {
 	 */
 	public void setApiKey(String apiKey) {
 		if (proxyInfo != null) {
-			weatherProvider = new WeatherProviderImpl(units, lang, apiKey, proxyInfo);
+			omwWeatherProvider = new OWMWeatherProvider_V_2_5(units, lang, apiKey, proxyInfo);
 		} else {
-			weatherProvider = new WeatherProviderImpl(units, lang, apiKey);
+			omwWeatherProvider = new OWMWeatherProvider_V_2_5(units, lang, apiKey);
 		}
 		this.apiKey = apiKey;
 	}
@@ -194,7 +191,7 @@ public class OpenWeatherMap {
 	 */
 	public void setProxy(String ip, int port) {
 		proxyInfo = new ProxyInfo(ip, port, null, null);
-		weatherProvider = new WeatherProviderImpl(units, lang, apiKey, proxyInfo);
+		omwWeatherProvider = new OWMWeatherProvider_V_2_5(units, lang, apiKey, proxyInfo);
 	}
 
 	/**
@@ -211,58 +208,58 @@ public class OpenWeatherMap {
 	 */
 	public void setProxy(String ip, int port, String user, String pass) {
 		proxyInfo = new ProxyInfo(ip, port, user, pass);
-		weatherProvider = new WeatherProviderImpl(units, lang, apiKey, proxyInfo);
+		omwWeatherProvider = new OWMWeatherProvider_V_2_5(units, lang, apiKey, proxyInfo);
 	}
 
-	public CurrentWeather currentWeatherByCityName(String cityName) throws IOException, JSONException {
-		return weatherProvider.currentWeatherByCityName(cityName);
+	public CurrentWeather currentWeatherByCityName(String cityName) throws WeatherNotFoundException {
+		return omwWeatherProvider.currentWeatherByCityName(cityName);
 	}
 
 	public CurrentWeather currentWeatherByCityName(String cityName, String countryCode)
-			throws IOException, JSONException {
-		return weatherProvider.currentWeatherByCityName(cityName, countryCode);
+			throws WeatherNotFoundException {
+		return omwWeatherProvider.currentWeatherByCityName(cityName, countryCode);
 	}
 
-	public CurrentWeather currentWeatherByCityCode(long cityCode) throws JSONException {
-		return weatherProvider.currentWeatherByCityCode(cityCode);
+	public CurrentWeather currentWeatherByCityCode(long cityCode) throws WeatherNotFoundException {
+		return omwWeatherProvider.currentWeatherByCityCode(cityCode);
 	}
 
-	public CurrentWeather currentWeatherByCoordinates(float latitude, float longitude) throws JSONException {
-		return weatherProvider.currentWeatherByCoordinates(latitude, longitude);
+	public CurrentWeather currentWeatherByCoordinates(float latitude, float longitude) throws WeatherNotFoundException {
+		return omwWeatherProvider.currentWeatherByCoordinates(latitude, longitude);
 	}
 
-	public HourlyForecast hourlyForecastByCityName(String cityName) throws IOException, JSONException {
-		return weatherProvider.hourlyForecastByCityName(cityName);
+	public HourlyForecast hourlyForecastByCityName(String cityName) throws WeatherNotFoundException {
+		return omwWeatherProvider.hourlyForecastByCityName(cityName);
 	}
 
 	public HourlyForecast hourlyForecastByCityName(String cityName, String countryCode)
-			throws IOException, JSONException {
-		return weatherProvider.hourlyForecastByCityName(cityName, countryCode);
+			throws WeatherNotFoundException {
+		return omwWeatherProvider.hourlyForecastByCityName(cityName, countryCode);
 	}
 
-	public HourlyForecast hourlyForecastByCityCode(long cityCode) throws JSONException {
-		return weatherProvider.hourlyForecastByCityCode(cityCode);
+	public HourlyForecast hourlyForecastByCityCode(long cityCode) throws WeatherNotFoundException {
+		return omwWeatherProvider.hourlyForecastByCityCode(cityCode);
 	}
 
-	public HourlyForecast hourlyForecastByCoordinates(float latitude, float longitude) throws JSONException {
-		return weatherProvider.hourlyForecastByCoordinates(latitude, longitude);
+	public HourlyForecast hourlyForecastByCoordinates(float latitude, float longitude) throws WeatherNotFoundException {
+		return omwWeatherProvider.hourlyForecastByCoordinates(latitude, longitude);
 	}
 
-	public DailyForecast dailyForecastByCityName(String cityName, byte count) throws IOException, JSONException {
-		return weatherProvider.dailyForecastByCityName(cityName, count);
+	public DailyForecast dailyForecastByCityName(String cityName, byte count) throws WeatherNotFoundException {
+		return omwWeatherProvider.dailyForecastByCityName(cityName, count);
 	}
 
 	public DailyForecast dailyForecastByCityName(String cityName, String countryCode, byte count)
-			throws IOException, JSONException {
-		return weatherProvider.dailyForecastByCityName(cityName, countryCode, count);
+			throws WeatherNotFoundException {
+		return omwWeatherProvider.dailyForecastByCityName(cityName, countryCode, count);
 	}
 
-	public DailyForecast dailyForecastByCityCode(long cityCode, byte count) throws JSONException {
-		return weatherProvider.dailyForecastByCityCode(cityCode, count);
+	public DailyForecast dailyForecastByCityCode(long cityCode, byte count) throws WeatherNotFoundException {
+		return omwWeatherProvider.dailyForecastByCityCode(cityCode, count);
 	}
 
-	public DailyForecast dailyForecastByCoordinates(float latitude, float longitude, byte count) throws JSONException {
-		return weatherProvider.dailyForecastByCoordinates(latitude, longitude, count);
+	public DailyForecast dailyForecastByCoordinates(float latitude, float longitude, byte count)
+			throws WeatherNotFoundException {
+		return omwWeatherProvider.dailyForecastByCoordinates(latitude, longitude, count);
 	}
-
 }

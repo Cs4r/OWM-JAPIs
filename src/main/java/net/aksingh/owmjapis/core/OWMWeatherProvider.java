@@ -22,41 +22,40 @@
  */
 package net.aksingh.owmjapis.core;
 
-import java.io.IOException;
-
-import org.json.JSONException;
+import net.aksingh.owmjapis.exception.WeatherNotFoundException;
 
 /**
- * Provides a set of methods to query weather information
+ * Provides a set of methods to consult weather information with
+ * http://openweathermap.org/
  * 
  * @author cs4r
  *
  */
-public interface WeatherProvider {
+public interface OWMWeatherProvider {
 
-	CurrentWeather currentWeatherByCityName(String cityName) throws IOException, JSONException;
+	CurrentWeather currentWeatherByCityName(String cityName) throws WeatherNotFoundException;
 
-	CurrentWeather currentWeatherByCityName(String cityName, String countryCode) throws IOException, JSONException;
+	CurrentWeather currentWeatherByCityName(String cityName, String countryCode) throws WeatherNotFoundException;
 
-	CurrentWeather currentWeatherByCityCode(long cityCode) throws JSONException;
+	CurrentWeather currentWeatherByCityCode(long cityCode) throws WeatherNotFoundException;
 
-	CurrentWeather currentWeatherByCoordinates(float latitude, float longitude) throws JSONException;
+	CurrentWeather currentWeatherByCoordinates(float latitude, float longitude) throws WeatherNotFoundException;
 
-	HourlyForecast hourlyForecastByCityName(String cityName) throws IOException, JSONException;
+	HourlyForecast hourlyForecastByCityName(String cityName) throws WeatherNotFoundException;
 
-	HourlyForecast hourlyForecastByCityName(String cityName, String countryCode) throws IOException, JSONException;
+	HourlyForecast hourlyForecastByCityName(String cityName, String countryCode) throws WeatherNotFoundException;
 
-	HourlyForecast hourlyForecastByCityCode(long cityCode) throws JSONException;
+	HourlyForecast hourlyForecastByCityCode(long cityCode) throws WeatherNotFoundException;
 
-	HourlyForecast hourlyForecastByCoordinates(float latitude, float longitude) throws JSONException;
+	HourlyForecast hourlyForecastByCoordinates(float latitude, float longitude) throws WeatherNotFoundException;
 
-	DailyForecast dailyForecastByCityName(String cityName, byte count) throws IOException, JSONException;
+	DailyForecast dailyForecastByCityName(String cityName, byte count) throws WeatherNotFoundException;
 
 	DailyForecast dailyForecastByCityName(String cityName, String countryCode, byte count)
-			throws IOException, JSONException;
+			throws WeatherNotFoundException;
 
-	DailyForecast dailyForecastByCityCode(long cityCode, byte count) throws JSONException;
+	DailyForecast dailyForecastByCityCode(long cityCode, byte count) throws WeatherNotFoundException;
 
-	DailyForecast dailyForecastByCoordinates(float latitude, float longitude, byte count) throws JSONException;
-
+	DailyForecast dailyForecastByCoordinates(float latitude, float longitude, byte count)
+			throws WeatherNotFoundException;
 }

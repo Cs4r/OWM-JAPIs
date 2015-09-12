@@ -31,6 +31,7 @@ import org.junit.Test;
 
 import net.aksingh.owmjapis.OpenWeatherMap;
 import net.aksingh.owmjapis.core.HourlyForecast;
+import net.aksingh.owmjapis.exception.WeatherNotFoundException;
 
 /**
  * <p>
@@ -49,7 +50,7 @@ public class HourlyForecastTest {
 	private static final int EXPECTED_CITY_CODE = 2643743;
 	
 	@Test
-    public void testHourlyForecastByCityNameReturnsValidData() throws IOException {
+    public void testHourlyForecastByCityNameReturnsValidData() throws WeatherNotFoundException {
         OpenWeatherMap owm = new OpenWeatherMap("");
         HourlyForecast hf = owm.hourlyForecastByCityName(LONDON_UK);
 

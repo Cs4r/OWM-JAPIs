@@ -25,12 +25,11 @@ package net.aksingh.owmjapis.aceptance;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
-
 import org.junit.Test;
 
 import net.aksingh.owmjapis.OpenWeatherMap;
 import net.aksingh.owmjapis.core.CurrentWeather;
+import net.aksingh.owmjapis.exception.WeatherNotFoundException;
 
 /**
  * <p>
@@ -49,7 +48,7 @@ public class CurrentWeatherTest {
 	private static final int EXPECTED_CITY_CODE = 2643743;
 
 	@Test
-    public void testCurrentWeatherByCityNameReturnsValidData() throws IOException {
+    public void testCurrentWeatherByCityNameReturnsValidData() throws WeatherNotFoundException {
         OpenWeatherMap owm = new OpenWeatherMap("");
         CurrentWeather cw = owm.currentWeatherByCityName(LONDON_UK);
         
