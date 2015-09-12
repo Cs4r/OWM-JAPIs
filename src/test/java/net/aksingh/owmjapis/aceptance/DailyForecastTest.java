@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2013-2015 Ashutosh Kumar Singh <me@aksingh.net>
+ * Copyright (c) 2015 Cesar Aguilera (@cs4r)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,7 +20,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package net.aksingh.owmjapis.aceptance;
 
 import static org.junit.Assert.assertEquals;
@@ -38,7 +38,8 @@ import net.aksingh.owmjapis.core.DailyForecast;
  * </p>
  *
  * @author Ashutosh Kumar Singh
- * @version 2015/01/22
+ * @author Cesar Aguilera
+ * @version 2015/09/12
  * @since 2.5.0.3
  */
 public class DailyForecastTest {
