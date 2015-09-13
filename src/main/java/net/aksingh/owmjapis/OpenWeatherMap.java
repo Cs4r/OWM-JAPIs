@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2013-2015 Ashutosh Kumar Singh <me@aksingh.net>
+ * Copyright (c) 2015 Cesar Aguilera (@cs4r)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -73,7 +74,7 @@ public class OpenWeatherMap {
 	 * @see <a href="http://openweathermap.org/appid">OWM.org API Key</a>
 	 */
 	public OpenWeatherMap(String apiKey) {
-		this(OWMUnits.IMPERIAL, OWMLanguage.ENGLISH, apiKey);
+		this(OWMUnits.METRIC, OWMLanguage.ENGLISH, apiKey);
 	}
 
 	/**
@@ -261,5 +262,10 @@ public class OpenWeatherMap {
 	public DailyForecast dailyForecastByCoordinates(float latitude, float longitude, byte count)
 			throws WeatherNotFoundException {
 		return omwWeatherProvider.dailyForecastByCoordinates(latitude, longitude, count);
+	}
+
+	/** Method used only for testing purposes */
+	protected void setOWMWeatherProvider(final OWMWeatherProvider owmWeatherProvider) {
+		this.omwWeatherProvider = owmWeatherProvider;
 	}
 }
