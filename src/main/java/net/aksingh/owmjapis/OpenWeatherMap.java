@@ -51,7 +51,8 @@ import net.aksingh.owmjapis.service.impl.OWMWeatherProvider_V_2_5;
  * </p>
  *
  * @author Ashutosh Kumar Singh <me@aksingh.net>
- * @version 2015-01-17
+ * @author Cesar Aguilera <@Cs4r>
+ * @version 2015-09-20
  * @see <a href="http://openweathermap.org/">OpenWeatherMap.org</a>
  * @see <a href="http://openweathermap.org/api">OpenWeatherMap.org API</a>
  * @since 2.5.0.1
