@@ -105,14 +105,14 @@ public class OWMAddress_V_2_5 implements OWMAddress {
 		this.lang = lang;
 	}
 
-	public String currentWeatherByCityName(String cityName) throws UnsupportedEncodingException {
+	public String currentWeatherByCityName(String cityName) {
 		return new StringBuilder().append(URL_API).append(URL_CURRENT).append(PARAM_CITY_NAME)
-				.append(URLEncoder.encode(cityName, ENCODING)).append("&").append(PARAM_MODE).append(this.mode)
+				.append(cityName).append("&").append(PARAM_MODE).append(this.mode)
 				.append("&").append(PARAM_UNITS).append(this.units.getCode()).append("&").append(PARAM_LANG)
 				.append(this.lang.getCode()).append("&").append(PARAM_APPID).append(this.appId).toString();
 	}
 
-	public String currentWeatherByCityName(String cityName, String countryCode) throws UnsupportedEncodingException {
+	public String currentWeatherByCityName(String cityName, String countryCode){
 		return currentWeatherByCityName(
 				new StringBuilder().append(cityName).append(",").append(countryCode).toString());
 	}
