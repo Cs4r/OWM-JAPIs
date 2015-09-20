@@ -265,7 +265,7 @@ public class OpenWeatherMap {
 		return omwWeatherProvider.dailyForecastByCoordinates(latitude, longitude, count);
 	}
 
-	/** Method used only for testing purposes */
+	/* Method used only for testing purposes */
 	protected void setOWMWeatherProvider(final OWMWeatherProvider owmWeatherProvider) {
 		this.omwWeatherProvider = owmWeatherProvider;
 	}

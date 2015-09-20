@@ -41,7 +41,6 @@ import java.util.Optional;
  * 
  * </ol>
  * It defines common methods like <code>get</code> and some others.
- * </p>
  *
  * @author Ashutosh Kumar Singh
  * @author Cesar Aguilera
