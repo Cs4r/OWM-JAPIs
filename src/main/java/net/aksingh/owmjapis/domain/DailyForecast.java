@@ -31,291 +31,248 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * <p>
- * Parses daily forecast data and provides methods to get/access the same information.
- * This class provides <code>has</code> and <code>get</code> methods to access the information.
+ * Parses daily forecast data and provides methods to get/access the same
+ * information. This class provides <code>has</code> and <code>get</code>
+ * methods to access the information.
  * </p>
  * <p>
- * <code>has</code> methods can be used to check if the data exists, i.e., if the data was available
- * (successfully downloaded) and was parsed correctly.
- * <code>get</code> methods can be used to access the data, if the data exists, otherwise <code>get</code>
- * methods will give value as per following basis:
- * Boolean: <code>false</code>
- * Integral: Minimum value (MIN_VALUE)
- * Floating point: Not a number (NaN)
- * Others: <code>null</code>
+ * <code>has</code> methods can be used to check if the data exists, i.e., if
+ * the data was available (successfully downloaded) and was parsed correctly.
+ * <code>get</code> methods can be used to access the data, if the data exists,
+ * otherwise <code>get</code> methods will give value as per following basis:
+ * Boolean: <code>false</code> Integral: Minimum value (MIN_VALUE) Floating
+ * point: Not a number (NaN) Others: <code>null</code>
  * </p>
  *
  * @author Ashutosh Kumar Singh
  * @version 2014/12/27
- * @see <a href="http://openweathermap.org/forecast">OWM's Weather Forecast API</a>
+ * @see <a href="http://openweathermap.org/forecast">OWM's Weather Forecast
+ *      API</a>
  * @since 2.5.0.3
  */
 public class DailyForecast extends AbstractForecast {
-    /*
-    Instance variables
-     */
-    private final List<Forecast> forecastList;
+	/*
+	 * Instance variables
+	 */
+	private final List<Forecast> forecastList;
 
-    /*
-    Constructors
-     */
-    public DailyForecast(JSONObject jsonObj) {
-        super(jsonObj);
+	/*
+	 * Constructors
+	 */
+	public DailyForecast(JSONObject jsonObj) {
+		super(jsonObj);
 
-        JSONArray dataArray = (jsonObj != null) ? jsonObj.optJSONArray(JSON_FORECAST_LIST) : new JSONArray();
-        this.forecastList = (dataArray != null) ? new ArrayList<Forecast>(dataArray.length()) : Collections.<Forecast>emptyList();
-        if (dataArray != null && this.forecastList != Collections.EMPTY_LIST) {
-            for (int i = 0; i < dataArray.length(); i++) {
-                JSONObject forecastObj = dataArray.optJSONObject(i);
-                if (forecastObj != null) {
-                    this.forecastList.add(new Forecast(forecastObj));
-                }
-            }
-        }
-    }
+		JSONArray dataArray = (jsonObj != null) ? jsonObj.optJSONArray(JSON_FORECAST_LIST) : new JSONArray();
+		this.forecastList = (dataArray != null) ? new ArrayList<Forecast>(dataArray.length())
+				: Collections.<Forecast> emptyList();
+		if (dataArray != null && this.forecastList != Collections.EMPTY_LIST) {
+			for (int i = 0; i < dataArray.length(); i++) {
+				JSONObject forecastObj = dataArray.optJSONObject(i);
+				if (forecastObj != null) {
+					this.forecastList.add(new Forecast(forecastObj));
+				}
+			}
+		}
+	}
 
-    /**
-     * @param index Index of Forecast instance in the list.
-     * @return Forecast instance if available, otherwise <code>null</code>.
-     */
-    public Forecast getForecastInstance(int index) {
-        return this.forecastList.get(index);
-    }
+	/**
+	 * @param index
+	 *            Index of Forecast instance in the list.
+	 * @return Forecast instance if available
+	 */
+	public Optional<Forecast> getForecastInstance(int index) {
+		return index > -1 && index < forecastList.size() ? Optional.of(this.forecastList.get(index))
+				: Optional.<Forecast> empty();
+	}
 
-    /**
-     * <p>
-     * Parses forecast data (one element in the forecastList) and provides methods to get/access the same information.
-     * This class provides <code>has</code> and <code>get</code> methods to access the information.
-     * </p>
-     * <p>
-     * <code>has</code> methods can be used to check if the data exists, i.e., if the data was available
-     * (successfully downloaded) and was parsed correctly.
-     * <code>get</code> methods can be used to access the data, if the data exists, otherwise <code>get</code>
-     * methods will give value as per following basis:
-     * Boolean: <code>false</code>
-     * Integral: Minimum value (MIN_VALUE)
-     * Floating point: Not a number (NaN)
-     * Others: <code>null</code>
-     * </p>
-     */
-    public static class Forecast extends AbstractForecast.Forecast {
-        /*
-        JSON Keys
-         */
-        public static final String JSON_TEMP = "temp";
+	/**
+	 * <p>
+	 * Parses forecast data (one element in the forecastList) and provides
+	 * methods to get/access the same information. This class provides
+	 * <code>has</code> and <code>get</code> methods to access the information.
+	 * </p>
+	 * <p>
+	 * <code>has</code> methods can be used to check if the data exists, i.e.,
+	 * if the data was available (successfully downloaded) and was parsed
+	 * correctly. <code>get</code> methods can be used to access the data, if
+	 * the data exists, otherwise <code>get</code> methods will give value as
+	 * per following basis: Boolean: <code>false</code> Integral: Minimum value
+	 * (MIN_VALUE) Floating point: Not a number (NaN) Others: <code>null</code>
+	 * </p>
+	 */
+	public static class Forecast extends AbstractForecast.Forecast {
+		/*
+		 * JSON Keys
+		 */
+		public static final String JSON_TEMP = "temp";
 
-        private static final String JSON_FORECAST_PRESSURE = "pressure";
-        private static final String JSON_FORECAST_HUMIDITY = "humidity";
-        private static final String JSON_FORECAST_WIND_SPEED = "speed";
-        private static final String JSON_FORECAST_WIND_DEGREE = "deg";
-        private static final String JSON_FORECAST_CLOUDS = "clouds";
-        private static final String JSON_FORECAST_RAIN = "rain";
-        private static final String JSON_FORECAST_SNOW = "snow";
+		private static final String JSON_FORECAST_PRESSURE = "pressure";
+		private static final String JSON_FORECAST_HUMIDITY = "humidity";
+		private static final String JSON_FORECAST_WIND_SPEED = "speed";
+		private static final String JSON_FORECAST_WIND_DEGREE = "deg";
+		private static final String JSON_FORECAST_CLOUDS = "clouds";
+		private static final String JSON_FORECAST_RAIN = "rain";
+		private static final String JSON_FORECAST_SNOW = "snow";
 
-        /*
-        Instance Variables
-         */
-        private final float pressure;
-        private final float humidity;
-        private final float windSpeed;
-        private final float windDegree;
-        private final float cloudsPercent;
-        private final float rain;
-        private final float snow;
+		/*
+		 * Instance Variables
+		 */
+		private final float pressure;
+		private final float humidity;
+		private final float windSpeed;
+		private final float windDegree;
+		private final float cloudsPercent;
+		private final float rain;
+		private final float snow;
 
-        private final Temperature temp;
+		private final Temperature temp;
 
-        /*
-        Constructors
-         */
-        Forecast() {
-            super();
+		/*
+		 * Constructors
+		 */
+		Forecast() {
+			super();
 
-            this.pressure = Float.NaN;
-            this.humidity = Float.NaN;
-            this.windSpeed = Float.NaN;
-            this.windDegree = Float.NaN;
-            this.cloudsPercent = Float.NaN;
-            this.rain = Float.NaN;
-            this.snow = Float.NaN;
+			this.pressure = Float.NaN;
+			this.humidity = Float.NaN;
+			this.windSpeed = Float.NaN;
+			this.windDegree = Float.NaN;
+			this.cloudsPercent = Float.NaN;
+			this.rain = Float.NaN;
+			this.snow = Float.NaN;
 
-            this.temp = new Temperature();
-        }
+			this.temp = new Temperature();
+		}
 
-        Forecast(JSONObject jsonObj) {
-            super(jsonObj);
+		Forecast(JSONObject jsonObj) {
+			super(jsonObj);
 
-            JSONObject jsonObjTemp = (jsonObj != null) ? jsonObj.optJSONObject(JSON_TEMP) : null;
-            this.temp = (jsonObjTemp != null) ? new Temperature(jsonObjTemp) : new Temperature();
+			JSONObject jsonObjTemp = (jsonObj != null) ? jsonObj.optJSONObject(JSON_TEMP) : null;
+			this.temp = (jsonObjTemp != null) ? new Temperature(jsonObjTemp) : new Temperature();
 
-            this.humidity = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_FORECAST_HUMIDITY, Double.NaN) : Float.NaN;
-            this.pressure = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_FORECAST_PRESSURE, Double.NaN) : Float.NaN;
-            this.windSpeed = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_FORECAST_WIND_SPEED, Double.NaN) : Float.NaN;
-            this.windDegree = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_FORECAST_WIND_DEGREE, Double.NaN) : Float.NaN;
-            this.cloudsPercent = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_FORECAST_CLOUDS, Double.NaN) : Float.NaN;
-            this.rain = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_FORECAST_RAIN, Double.NaN) : Float.NaN;
-            this.snow = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_FORECAST_SNOW, Double.NaN) : Float.NaN;
-        }
+			this.humidity = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_FORECAST_HUMIDITY, Double.NaN)
+					: Float.NaN;
+			this.pressure = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_FORECAST_PRESSURE, Double.NaN)
+					: Float.NaN;
+			this.windSpeed = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_FORECAST_WIND_SPEED, Double.NaN)
+					: Float.NaN;
+			this.windDegree = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_FORECAST_WIND_DEGREE, Double.NaN)
+					: Float.NaN;
+			this.cloudsPercent = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_FORECAST_CLOUDS, Double.NaN)
+					: Float.NaN;
+			this.rain = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_FORECAST_RAIN, Double.NaN) : Float.NaN;
+			this.snow = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_FORECAST_SNOW, Double.NaN) : Float.NaN;
+		}
 
-        public boolean hasHumidity() {
-            return !Float.isNaN(this.humidity);
-        }
+		public Optional<Float> getHumidity() {
+			return !Float.isNaN(this.humidity) ? Optional.of(this.humidity) : Optional.<Float> empty();
+		}
 
-        public boolean hasPressure() {
-            return !Float.isNaN(this.pressure);
-        }
+		public Optional<Float> getPressure() {
+			return !Float.isNaN(this.pressure) ? Optional.of(this.pressure) : Optional.<Float> empty();
+		}
 
-        public boolean hasWindSpeed() {
-            return !Float.isNaN(this.windSpeed);
-        }
+		public Optional<Float> getWindSpeed() {
+			return !Float.isNaN(this.windSpeed) ? Optional.of(this.windSpeed) : Optional.<Float> empty();
+		}
 
-        public boolean hasWindDegree() {
-            return !Float.isNaN(this.windDegree);
-        }
+		public Optional<Float> getWindDegree() {
+			return !Float.isNaN(this.windDegree) ? Optional.of(this.windDegree) : Optional.<Float> empty();
+		}
 
-        public boolean hasPercentageOfClouds() {
-            return !Float.isNaN(this.cloudsPercent);
-        }
+		public Optional<Float> getPercentageOfClouds() {
+			return !Float.isNaN(this.cloudsPercent) ? Optional.of(this.cloudsPercent) : Optional.<Float> empty();
+		}
 
-        public boolean hasRain() {
-            return !Float.isNaN(this.rain);
-        }
+		public Optional<Float> getRain() {
+			return !Float.isNaN(this.rain) ? Optional.of(this.rain) : Optional.<Float> empty();
+		}
 
-        public boolean hasSnow() {
-            return !Float.isNaN(this.snow);
-        }
+		public Optional<Float> getSnow() {
+			return !Float.isNaN(this.snow) ? Optional.of(this.snow) : Optional.<Float> empty();
+		}
 
-        public float getHumidity() {
-            return this.humidity;
-        }
+		public Temperature getTemperatureInstance() {
+			return this.temp;
+		}
 
-        public float getPressure() {
-            return this.pressure;
-        }
+		/**
+		 * <p>
+		 * Parses temperature data and provides methods to get/access the same
+		 * information. This class provides <code>has</code> and
+		 * <code>get</code> methods to access the information.
+		 * </p>
+		 * <p>
+		 * <code>has</code> methods can be used to check if the data exists,
+		 * i.e., if the data was available (successfully downloaded) and was
+		 * parsed correctly. <code>get</code> methods can be used to access the
+		 * data, if the data exists, otherwise <code>get</code> methods will
+		 * give value as per following basis: Boolean: <code>false</code>
+		 * Integral: Minimum value (MIN_VALUE) Floating point: Not a number
+		 * (NaN) Others: <code>null</code>
+		 * </p>
+		 */
+		public static class Temperature implements Serializable {
+			private static final String JSON_TEMP_DAY = "day";
+			private static final String JSON_TEMP_MIN = "min";
+			private static final String JSON_TEMP_MAX = "max";
+			private static final String JSON_TEMP_NIGHT = "night";
+			private static final String JSON_TEMP_EVENING = "eve";
+			private static final String JSON_TEMP_MORNING = "morn";
 
-        public float getWindSpeed() {
-            return this.windSpeed;
-        }
+			private final float dayTemp;
+			private final float minTemp;
+			private final float maxTemp;
+			private final float nightTemp;
+			private final float eveTemp;
+			private final float mornTemp;
 
-        public float getWindDegree() {
-            return this.windDegree;
-        }
+			Temperature() {
+				this.dayTemp = Float.NaN;
+				this.minTemp = Float.NaN;
+				this.maxTemp = Float.NaN;
+				this.nightTemp = Float.NaN;
+				this.eveTemp = Float.NaN;
+				this.mornTemp = Float.NaN;
+			}
 
-        public float getPercentageOfClouds() {
-            return this.cloudsPercent;
-        }
+			Temperature(JSONObject jsonObj) {
+				this.dayTemp = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_TEMP_DAY, Double.NaN) : Float.NaN;
+				this.minTemp = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_TEMP_MIN, Double.NaN) : Float.NaN;
+				this.maxTemp = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_TEMP_MAX, Double.NaN) : Float.NaN;
+				this.nightTemp = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_TEMP_NIGHT, Double.NaN) : Float.NaN;
+				this.eveTemp = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_TEMP_EVENING, Double.NaN) : Float.NaN;
+				this.mornTemp = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_TEMP_MORNING, Double.NaN)
+						: Float.NaN;
+			}
 
-        public float getRain() {
-            return this.rain;
-        }
+			public Optional<Float> getDayTemperature() {
+				return !Float.isNaN(this.dayTemp) ? Optional.of(this.dayTemp) : Optional.<Float> empty();
+			}
 
-        public float getSnow() {
-            return this.snow;
-        }
+			public Optional<Float> getMinimumTemperature() {
+				return !Float.isNaN(this.minTemp) ? Optional.of(this.minTemp) : Optional.<Float> empty();
+			}
 
-        public Temperature getTemperatureInstance() {
-            return this.temp;
-        }
+			public Optional<Float> getMaximumTemperature() {
+				return !Float.isNaN(this.maxTemp) ? Optional.of(this.maxTemp) : Optional.<Float> empty();
+			}
 
-        /**
-         * <p>
-         * Parses temperature data and provides methods to get/access the same information.
-         * This class provides <code>has</code> and <code>get</code> methods to access the information.
-         * </p>
-         * <p>
-         * <code>has</code> methods can be used to check if the data exists, i.e., if the data was available
-         * (successfully downloaded) and was parsed correctly.
-         * <code>get</code> methods can be used to access the data, if the data exists, otherwise <code>get</code>
-         * methods will give value as per following basis:
-         * Boolean: <code>false</code>
-         * Integral: Minimum value (MIN_VALUE)
-         * Floating point: Not a number (NaN)
-         * Others: <code>null</code>
-         * </p>
-         */
-        public static class Temperature implements Serializable {
-            private static final String JSON_TEMP_DAY = "day";
-            private static final String JSON_TEMP_MIN = "min";
-            private static final String JSON_TEMP_MAX = "max";
-            private static final String JSON_TEMP_NIGHT = "night";
-            private static final String JSON_TEMP_EVENING = "eve";
-            private static final String JSON_TEMP_MORNING = "morn";
+			public Optional<Float> getNightTemperature() {
+				return !Float.isNaN(this.nightTemp) ? Optional.of(this.nightTemp) : Optional.<Float> empty();
+			}
 
-            private final float dayTemp;
-            private final float minTemp;
-            private final float maxTemp;
-            private final float nightTemp;
-            private final float eveTemp;
-            private final float mornTemp;
+			public Optional<Float> getEveningTemperature() {
+				return !Float.isNaN(this.eveTemp) ? Optional.of(this.eveTemp) : Optional.<Float> empty();
+			}
 
-            Temperature() {
-                this.dayTemp = Float.NaN;
-                this.minTemp = Float.NaN;
-                this.maxTemp = Float.NaN;
-                this.nightTemp = Float.NaN;
-                this.eveTemp = Float.NaN;
-                this.mornTemp = Float.NaN;
-            }
-
-            Temperature(JSONObject jsonObj) {
-                this.dayTemp = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_TEMP_DAY, Double.NaN) : Float.NaN;
-                this.minTemp = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_TEMP_MIN, Double.NaN) : Float.NaN;
-                this.maxTemp = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_TEMP_MAX, Double.NaN) : Float.NaN;
-                this.nightTemp = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_TEMP_NIGHT, Double.NaN) : Float.NaN;
-                this.eveTemp = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_TEMP_EVENING, Double.NaN) : Float.NaN;
-                this.mornTemp = (jsonObj != null) ? (float) jsonObj.optDouble(JSON_TEMP_MORNING, Double.NaN) : Float.NaN;
-            }
-
-            public boolean hasDayTemperature() {
-                return !Float.isNaN(this.dayTemp);
-            }
-
-            public boolean hasMinimumTemperature() {
-                return !Float.isNaN(this.minTemp);
-            }
-
-            public boolean hasMaximumTemperature() {
-                return !Float.isNaN(this.maxTemp);
-            }
-
-            public boolean hasNightTemperature() {
-                return !Float.isNaN(this.nightTemp);
-            }
-
-            public boolean hasEveningTemperature() {
-                return !Float.isNaN(this.eveTemp);
-            }
-
-            public boolean hasMorningTemperature() {
-                return !Float.isNaN(this.mornTemp);
-            }
-
-            public float getDayTemperature() {
-                return this.dayTemp;
-            }
-
-            public float getMinimumTemperature() {
-                return this.minTemp;
-            }
-
-            public float getMaximumTemperature() {
-                return this.maxTemp;
-            }
-
-            public float getNightTemperature() {
-                return this.nightTemp;
-            }
-
-            public float getEveningTemperature() {
-                return this.eveTemp;
-            }
-
-            public float getMorningTemperature() {
-                return this.mornTemp;
-            }
-        }
-    }
+			public Optional<Float> getMorningTemperature() {
+				return !Float.isNaN(this.mornTemp) ? Optional.of(this.mornTemp) : Optional.<Float> empty();
+			}
+		}
+	}
 }

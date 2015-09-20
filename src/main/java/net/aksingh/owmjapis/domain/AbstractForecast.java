@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2013-2015 Ashutosh Kumar Singh <me@aksingh.net>
+ * Copyright (c) 2015 Cesar Aguilera (@cs4r)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,228 +23,185 @@
 
 package net.aksingh.owmjapis.domain;
 
-import org.json.JSONObject;
-
 import java.io.Serializable;
+import java.util.Optional;
+
+import org.json.JSONObject;
 
 /**
  * <p>
- * Provides default behaviours and implementations for:
- * 1. {@link net.aksingh.owmjapis.domain.HourlyForecast}
- * 2. {@link net.aksingh.owmjapis.domain.DailyForecast}
- * It defines common methods like <code>has</code>, <code>get</code> and some others.
+ * Provides default behaviours and implementations for: 1.
+ * {@link net.aksingh.owmjapis.domain.HourlyForecast} 2.
+ * {@link net.aksingh.owmjapis.domain.DailyForecast} It defines common methods
+ * like <code>has</code>, <code>get</code> and some others.
  * </p>
  *
  * @author Ashutosh Kumar Singh
- * @version 2014/12/27
+ * @author Cesar Aguilera
+ * @version 2015/09/20
  * @since 2.5.0.3
  */
 public abstract class AbstractForecast extends AbstractResponse {
-    /*
-    JSON Keys
-     */
-    static final String JSON_FORECAST_LIST = "list";
-    static final String JSON_MESSAGE = "message";
-    static final String JSON_CITY = "city";
-    static final String JSON_FORECAST_COUNT = "cnt";
+	/*
+	 * JSON Keys
+	 */
+	static final String JSON_FORECAST_LIST = "list";
+	static final String JSON_MESSAGE = "message";
+	static final String JSON_CITY = "city";
+	static final String JSON_FORECAST_COUNT = "cnt";
 
-    /*
-    Instance variables
-     */
-    private final double message;
+	/*
+	 * Instance variables
+	 */
+	private final double message;
 
-    private final City city;
-    private final int forecastCount;
+	private final City city;
+	private final int forecastCount;
 
-    /*
-    Constructors
-     */
-    AbstractForecast() {
-        super();
+	/*
+	 * Constructors
+	 */
+	AbstractForecast() {
+		super();
 
-        this.message = Double.NaN;
-        this.forecastCount = 0;
-        this.city = null;
-    }
+		this.message = Double.NaN;
+		this.forecastCount = 0;
+		this.city = null;
+	}
 
-    AbstractForecast(JSONObject jsonObj) {
-        super(jsonObj);
+	AbstractForecast(JSONObject jsonObj) {
+		super(jsonObj);
 
-        this.message = (jsonObj != null) ? jsonObj.optDouble(JSON_MESSAGE, Double.NaN) : Double.NaN;
+		this.message = (jsonObj != null) ? jsonObj.optDouble(JSON_MESSAGE, Double.NaN) : Double.NaN;
 
-        this.city = (jsonObj != null) ? new City(jsonObj.optJSONObject(JSON_CITY)) : null;
+		this.city = (jsonObj != null) ? new City(jsonObj.optJSONObject(JSON_CITY)) : null;
 
-        this.forecastCount = (jsonObj != null) ? jsonObj.optInt(JSON_FORECAST_COUNT, 0) : 0;
-    }
+		this.forecastCount = (jsonObj != null) ? jsonObj.optInt(JSON_FORECAST_COUNT, 0) : 0;
+	}
 
-    /**
-     * @return <code>true</code> if message is available, otherwise <code>false</code>.
-     */
-    public boolean hasMessage() {
-        return (this.message != Double.NaN);
-    }
+	/**
+	 * @return Message if available.
+	 */
+	public Optional<Double> getMessage() {
+		return this.message != Double.NaN ? Optional.of(this.message) : Optional.<Double> empty();
+	}
 
-    /**
-     * @return <code>true</code> if count of forecasts is available, otherwise <code>false</code>.
-     */
-    public boolean hasForecastCount() {
-        return (this.forecastCount != 0);
-    }
+	/**
+	 * @return Count of forecasts if available, <code>0</code> otherwise.
+	 */
+	public Integer getForecastCount() {
+		return this.forecastCount;
+	}
 
-    /**
-     * @return <code>true</code> if message is available, otherwise <code>false</code>.
-     */
-    public boolean hasCityInstance() {
-        return (this.city != null);
-    }
+	/**
+	 * @return City's instance if available</code>.
+	 */
+	public Optional<City> getCityInstance() {
+		return Optional.ofNullable(this.city);
+	}
 
-    /**
-     * @return Message if available, otherwise <code>Double.NaN</code>.
-     */
-    public double getMessage() {
-        return this.message;
-    }
+	/**
+	 * <p>
+	 * Provides default behaviours for City
+	 * </p>
+	 *
+	 * @author Ashutosh Kumar Singh
+	 */
+	public static class City implements Serializable {
+		private static final String JSON_CITY_ID = "id";
+		private static final String JSON_CITY_NAME = "name";
+		private static final String JSON_CITY_COUNTRY_CODE = "country";
+		private static final String JSON_CITY_POPULATION = "population";
+		private static final String JSON_CITY_COORD = "coord";
 
-    /**
-     * @return Count of forecasts if available, otherwise <code>0</code>.
-     */
-    public int getForecastCount() {
-        return this.forecastCount;
-    }
+		private final long cityID;
+		private final String cityName;
+		private final String countryCode;
+		private final long population;
 
-    /**
-     * @return City's instance if available, otherwise <code>null</code>.
-     */
-    public City getCityInstance() {
-        return this.city;
-    }
+		private final Coord coord;
 
-    /**
-     * <p>
-     * Provides default behaviours for City
-     * </p>
-     *
-     * @author Ashutosh Kumar Singh
-     */
-    public static class City implements Serializable {
-        private static final String JSON_CITY_ID = "id";
-        private static final String JSON_CITY_NAME = "name";
-        private static final String JSON_CITY_COUNTRY_CODE = "country";
-        private static final String JSON_CITY_POPULATION = "population";
-        private static final String JSON_CITY_COORD = "coord";
+		City() {
+			this.cityID = Long.MIN_VALUE;
+			this.cityName = null;
+			this.countryCode = null;
+			this.population = Long.MIN_VALUE;
 
-        private final long cityID;
-        private final String cityName;
-        private final String countryCode;
-        private final long population;
+			this.coord = new Coord();
+		}
 
-        private final Coord coord;
+		City(JSONObject jsonObj) {
+			this.cityID = (jsonObj != null) ? jsonObj.optLong(JSON_CITY_ID, Long.MIN_VALUE) : Long.MIN_VALUE;
+			this.cityName = (jsonObj != null) ? jsonObj.optString(JSON_CITY_NAME, null) : null;
+			this.countryCode = (jsonObj != null) ? jsonObj.optString(JSON_CITY_COUNTRY_CODE, null) : null;
+			this.population = (jsonObj != null) ? jsonObj.optLong(JSON_CITY_POPULATION, Long.MIN_VALUE)
+					: Long.MIN_VALUE;
 
-        City() {
-            this.cityID = Long.MIN_VALUE;
-            this.cityName = null;
-            this.countryCode = null;
-            this.population = Long.MIN_VALUE;
+			JSONObject jsonObjCoord = (jsonObj != null) ? jsonObj.optJSONObject(JSON_CITY_COORD) : null;
+			this.coord = (jsonObjCoord != null) ? new Coord(jsonObjCoord) : null;
+		}
 
-            this.coord = new Coord();
-        }
+		public Optional<Long> getCityCode() {
+			return this.cityID != Long.MIN_VALUE ? Optional.of(this.cityID) : Optional.<Long> empty();
+		}
 
-        City(JSONObject jsonObj) {
-            this.cityID = (jsonObj != null) ? jsonObj.optLong(JSON_CITY_ID, Long.MIN_VALUE) : Long.MIN_VALUE;
-            this.cityName = (jsonObj != null) ? jsonObj.optString(JSON_CITY_NAME, null) : null;
-            this.countryCode = (jsonObj != null) ? jsonObj.optString(JSON_CITY_COUNTRY_CODE, null) : null;
-            this.population = (jsonObj != null) ? jsonObj.optLong(JSON_CITY_POPULATION, Long.MIN_VALUE) : Long.MIN_VALUE;
+		public Optional<String> getCityName() {
+			return Optional.ofNullable(this.cityName);
+		}
 
-            JSONObject jsonObjCoord = (jsonObj != null) ? jsonObj.optJSONObject(JSON_CITY_COORD) : null;
-            this.coord = (jsonObjCoord != null) ? new Coord(jsonObjCoord) : null;
-        }
+		public Optional<String> getCountryCode() {
+			return Optional.ofNullable(this.countryCode);
+		}
 
-        public boolean hasCityCode() {
-            return this.cityID != Long.MIN_VALUE;
-        }
+		public Optional<Long> getCityPopulation() {
+			return this.population != Long.MIN_VALUE ? Optional.of(this.population) : Optional.<Long> empty();
+		}
 
-        public boolean hasCityName() {
-            return this.cityName != null;
-        }
+		/**
+		 * @return Coord instance if available.
+		 */
+		public Optional<Coord> getCoordInstance() {
+			return Optional.ofNullable(this.coord);
+		}
 
-        public boolean hasCountryCode() {
-            return this.countryCode != null;
-        }
+		public static class Coord extends AbstractWeather.Coord {
 
-        public boolean hasCityPopulation() {
-            return this.population != Long.MIN_VALUE;
-        }
+			Coord() {
+				super();
+			}
 
-        /**
-         * @return <code>true</code> if Coord instance is available, otherwise <code>false</code>.
-         */
-        public boolean hasCoordInstance() {
-            return coord != null;
-        }
+			Coord(JSONObject jsonObj) {
+				super(jsonObj);
+			}
+		}
+	}
 
-        public long getCityCode() {
-            return this.cityID;
-        }
+	/**
+	 * <p>
+	 * Parses forecast data (one element in the forecastList) and provides
+	 * methods to get/access the same information. This class provides
+	 * <code>has</code> and <code>get</code> methods to access the information.
+	 * </p>
+	 * <p>
+	 * <code>has</code> methods can be used to check if the data exists, i.e.,
+	 * if the data was available (successfully downloaded) and was parsed
+	 * correctly. <code>get</code> methods can be used to access the data, if
+	 * the data exists, otherwise <code>get</code> methods will give value as
+	 * per following basis: Boolean: <code>false</code> Integral: Minimum value
+	 * (MIN_VALUE) Floating point: Not a number (NaN) Others: <code>null</code>
+	 * </p>
+	 *
+	 * @author Ashutosh Kumar Singh
+	 * @version 2014/12/27
+	 * @since 2.5.0.3
+	 */
+	public abstract static class Forecast extends AbstractWeather {
+		Forecast() {
+			super();
+		}
 
-        public String getCityName() {
-            return this.cityName;
-        }
-
-        public String getCountryCode() {
-            return this.countryCode;
-        }
-
-        public long getCityPopulation() {
-            return this.population;
-        }
-
-        /**
-         * @return Coord instance if available, otherwise <code>null</code>.
-         */
-        public Coord getCoordInstance() {
-            return this.coord;
-        }
-
-
-        public static class Coord extends AbstractWeather.Coord {
-
-            Coord() {
-                super();
-            }
-
-            Coord(JSONObject jsonObj) {
-                super(jsonObj);
-            }
-        }
-    }
-
-    /**
-     * <p>
-     * Parses forecast data (one element in the forecastList) and provides methods to get/access the same information.
-     * This class provides <code>has</code> and <code>get</code> methods to access the information.
-     * </p>
-     * <p>
-     * <code>has</code> methods can be used to check if the data exists, i.e., if the data was available
-     * (successfully downloaded) and was parsed correctly.
-     * <code>get</code> methods can be used to access the data, if the data exists, otherwise <code>get</code>
-     * methods will give value as per following basis:
-     * Boolean: <code>false</code>
-     * Integral: Minimum value (MIN_VALUE)
-     * Floating point: Not a number (NaN)
-     * Others: <code>null</code>
-     * </p>
-     *
-     * @author Ashutosh Kumar Singh
-     * @version 2014/12/27
-     * @since 2.5.0.3
-     */
-    public abstract static class Forecast extends AbstractWeather {
-        Forecast() {
-            super();
-        }
-
-        Forecast(JSONObject jsonObj) {
-            super(jsonObj);
-        }
-    }
+		Forecast(JSONObject jsonObj) {
+			super(jsonObj);
+		}
+	}
 }

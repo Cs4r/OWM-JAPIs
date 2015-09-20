@@ -38,49 +38,50 @@ import net.aksingh.owmjapis.exception.WeatherNotFoundException;
  *
  * @author Ashutosh Kumar Singh
  * @author Cesar Aguilera
- * @version 2015/09/12
+ * @version 2015/09/20
  * @since 2.5.0.3
  */
 public class CurrentWeatherTest {
-	
+
 	private static final String LONDON_UK = "London, UK";
 	private static final String EXPECTED_CITY_NAME = "London";
 	private static final int EXPECTED_CITY_CODE = 2643743;
 
 	@Test
-    public void testCurrentWeatherByCityNameReturnsValidData() throws WeatherNotFoundException {
-        OpenWeatherMap owm = new OpenWeatherMap("");
-        CurrentWeather cw = owm.currentWeatherByCityName(LONDON_UK);
-        
-        boolean validResponse = cw.isValid();
+	public void testCurrentWeatherByCityNameReturnsValidData() throws WeatherNotFoundException {
+		OpenWeatherMap owm = new OpenWeatherMap("");
+		CurrentWeather cw = owm.currentWeatherByCityName(LONDON_UK);
+
+		boolean validResponse = cw.isValid();
 		assertTrue(validResponse);
-        
-        if (!validResponse) {
-            System.out.println("Reponse is inValid!");
-        } else {
-            System.out.println("Reponse is Valid!");
-            System.out.println();
 
-            if (cw.hasBaseStation()) {
-                System.out.println("Base station: " + cw.getBaseStation());
-            }
-            if (cw.hasDateTime()) {
-                System.out.println("Date time: " + cw.getDateTime());
-            }
-            System.out.println();
+		if (!validResponse) {
+			System.out.println("Reponse is inValid!");
+		} else {
+			System.out.println("Reponse is Valid!");
+			System.out.println();
 
+			cw.getBaseStation().ifPresent(baseStation -> {
+				System.out.println("Base station: " + baseStation);
+			});
 
-            if (cw.hasCityCode()) {
-            	long cityCode = cw.getCityCode();
-				assertEquals(EXPECTED_CITY_CODE, cityCode);
-                System.out.println("City code: " + cityCode);
-            }
-            if (cw.hasCityName()) {
-                String cityName = cw.getCityName();
+			cw.getDateTime().ifPresent(dateTime -> {
+				System.out.println("Date time: " + dateTime);
+			});
+
+			System.out.println();
+
+			cw.getCityCode().ifPresent(cityCode -> {
+				assertEquals(EXPECTED_CITY_CODE, cityCode.longValue());
+				System.out.println("City code: " + cityCode);
+			});
+
+			cw.getCityName().ifPresent(cityName -> {
 				assertEquals(EXPECTED_CITY_NAME, cityName);
 				System.out.println("City name: " + cityName);
-            }
-            System.out.println();
-        }
-    }
+			});
+
+			System.out.println();
+		}
+	}
 }

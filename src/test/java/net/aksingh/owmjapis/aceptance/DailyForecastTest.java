@@ -26,11 +26,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.util.function.Consumer;
 
 import org.junit.Test;
 
 import net.aksingh.owmjapis.OpenWeatherMap;
 import net.aksingh.owmjapis.domain.DailyForecast;
+import net.aksingh.owmjapis.domain.DailyForecast.Forecast;
 import net.aksingh.owmjapis.exception.WeatherNotFoundException;
 
 /**
@@ -40,61 +42,58 @@ import net.aksingh.owmjapis.exception.WeatherNotFoundException;
  *
  * @author Ashutosh Kumar Singh
  * @author Cesar Aguilera
- * @version 2015/09/12
+ * @version 2015/09/20
  * @since 2.5.0.3
  */
 public class DailyForecastTest {
 
 	private static final String LONDON_UK = "London, UK";
 	private static final String EXPECTED_CITY_NAME = "London";
-	private static final int EXPECTED_CITY_CODE = 2643743;
-	
+	private static final long EXPECTED_CITY_CODE = 2643743;
+
 	@Test
-    public void testDailyForecastByCityNameReturnsValidData() throws WeatherNotFoundException {
-        OpenWeatherMap owm = new OpenWeatherMap("");
-        DailyForecast df = owm.dailyForecastByCityName(LONDON_UK, Byte.parseByte("5"));
+	public void testDailyForecastByCityNameReturnsValidData() throws WeatherNotFoundException {
+		OpenWeatherMap owm = new OpenWeatherMap("");
+		DailyForecast df = owm.dailyForecastByCityName(LONDON_UK, Byte.parseByte("5"));
 
-        boolean validResponse = df.isValid();
-    	assertTrue(validResponse);
-    	
+		boolean validResponse = df.isValid();
+		assertTrue(validResponse);
+
 		if (!validResponse) {
-            System.out.println("Reponse is inValid!");
-        } else {
-            System.out.println("Reponse is Valid!");
-            System.out.println();
+			System.out.println("Reponse is inValid!");
+		} else {
+			System.out.println("Reponse is Valid!");
+			System.out.println();
 
-            if (df.hasCityInstance()) {
-                DailyForecast.City city = df.getCityInstance();
-                if (city.hasCityName()) {
-                	if (city.hasCityCode()) {
-                    	long cityCode = city.getCityCode();
-        				assertEquals(EXPECTED_CITY_CODE, cityCode);
-                        System.out.println("City code: " + cityCode);
-                        
-                    }
-                    if (city.hasCityName()) {
-                        String cityName = city.getCityName();
-        				assertEquals(EXPECTED_CITY_NAME, cityName);
-        				System.out.println("City name: " + cityName);
-                    }
-                    System.out.println();
-                }
-            }
+			df.getCityInstance().ifPresent(city -> {
 
-            System.out.println("Total forecast instances: " + df.getForecastCount());
-            System.out.println();
+				city.getCityName().ifPresent(cityName -> {
+					assertEquals(EXPECTED_CITY_NAME, cityName);
+					System.out.println("City name: " + cityName);
+				});
 
-            for (int i = 0; i < df.getForecastCount(); i++) {
-                DailyForecast.Forecast forecast = df.getForecastInstance(i);
+				city.getCityCode().ifPresent(cityCode -> {
+					assertEquals(EXPECTED_CITY_CODE, cityCode.longValue());
+					System.out.println("City code: " + cityCode);
 
-                System.out.println("*** Forecast instance number " + (i+1) + " ***");
+				});
 
-                if (forecast.hasDateTime()) {
-                    System.out.println(forecast.getDateTime());
-                }
+				System.out.println();
 
-                System.out.println();
-            }
-        }
-    }
+			});
+
+			System.out.println("Total forecast instances: " + df.getForecastCount());
+			System.out.println();
+
+			for (int i = 0; i < df.getForecastCount(); i++) {
+				final int index = i;
+
+				df.getForecastInstance(i).ifPresent(forecast -> {
+					System.out.println("*** Forecast instance number " + (index + 1) + " ***");
+					forecast.getDateTime().ifPresent(System.out::println);
+					System.out.println();
+				});
+			}
+		}
+	}
 }
