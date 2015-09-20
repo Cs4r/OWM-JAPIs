@@ -22,34 +22,28 @@
 
 package net.aksingh.owmjapis.domain;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import net.aksingh.owmjapis.domain.AbstractForecast.Forecast;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  * <p>
  * Parses daily forecast data and provides methods to get/access the same
- * information. This class provides <code>has</code> and <code>get</code>
- * methods to access the information.
+ * information. This class provides <code>get</code> methods to access the
+ * information.
  * </p>
  * <p>
- * <code>has</code> methods can be used to check if the data exists, i.e., if
- * the data was available (successfully downloaded) and was parsed correctly.
- * <code>get</code> methods can be used to access the data, if the data exists,
- * otherwise <code>get</code> methods will give value as per following basis:
- * Boolean: <code>false</code> Integral: Minimum value (MIN_VALUE) Floating
- * point: Not a number (NaN) Others: <code>null</code>
+ * <code>get</code> methods can be used to retrieve the data if it exists.
  * </p>
  *
  * @author Ashutosh Kumar Singh
- * @version 2014/12/27
+ * @author Cesar Aguilera
+ * @version 2015/09/20
  * @see <a href="http://openweathermap.org/forecast">OWM's Weather Forecast
  *      API</a>
  * @since 2.5.0.3
@@ -93,22 +87,22 @@ public class DailyForecast extends AbstractForecast {
 	 * <p>
 	 * Parses forecast data (one element in the forecastList) and provides
 	 * methods to get/access the same information. This class provides
-	 * <code>has</code> and <code>get</code> methods to access the information.
+	 * <code>get</code> methods to access the information.
 	 * </p>
 	 * <p>
-	 * <code>has</code> methods can be used to check if the data exists, i.e.,
-	 * if the data was available (successfully downloaded) and was parsed
-	 * correctly. <code>get</code> methods can be used to access the data, if
-	 * the data exists, otherwise <code>get</code> methods will give value as
-	 * per following basis: Boolean: <code>false</code> Integral: Minimum value
-	 * (MIN_VALUE) Floating point: Not a number (NaN) Others: <code>null</code>
+	 * <code>get</code> methods can be used to retrieve the data if it exists.
 	 * </p>
+	 * 
+	 * @author Ashutosh Kumar Singh
+	 * @author Cesar Aguilera
+	 * @version 2015/09/20
+	 * @since 2.5.0.1
 	 */
 	public static class Forecast extends AbstractForecast.Forecast {
 		/*
 		 * JSON Keys
 		 */
-		public static final String JSON_TEMP = "temp";
+		private static final String JSON_TEMP = "temp";
 
 		private static final String JSON_FORECAST_PRESSURE = "pressure";
 		private static final String JSON_FORECAST_HUMIDITY = "humidity";
@@ -203,18 +197,18 @@ public class DailyForecast extends AbstractForecast {
 		/**
 		 * <p>
 		 * Parses temperature data and provides methods to get/access the same
-		 * information. This class provides <code>has</code> and
-		 * <code>get</code> methods to access the information.
+		 * information. This class provides <code>get</code> methods to access
+		 * the information.
 		 * </p>
 		 * <p>
-		 * <code>has</code> methods can be used to check if the data exists,
-		 * i.e., if the data was available (successfully downloaded) and was
-		 * parsed correctly. <code>get</code> methods can be used to access the
-		 * data, if the data exists, otherwise <code>get</code> methods will
-		 * give value as per following basis: Boolean: <code>false</code>
-		 * Integral: Minimum value (MIN_VALUE) Floating point: Not a number
-		 * (NaN) Others: <code>null</code>
+		 * <code>get</code> methods can be used to retrieve the data if it
+		 * exists.
 		 * </p>
+		 * 
+		 * @author Ashutosh Kumar Singh
+		 * @author Cesar Aguilera
+		 * @version 2015/09/20
+		 * @since 2.5.0.1
 		 */
 		public static class Temperature implements Serializable {
 			private static final String JSON_TEMP_DAY = "day";

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2013-2015 Ashutosh Kumar Singh <me@aksingh.net>
- * Copyright (c) 2015 Cesar Aguilera (@cs4r)
+ * Copyright (c) 2015 Cesar Aguilera
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -51,7 +51,7 @@ import net.aksingh.owmjapis.service.impl.OWMWeatherProvider_V_2_5;
  * </p>
  *
  * @author Ashutosh Kumar Singh <me@aksingh.net>
- * @author Cesar Aguilera <@Cs4r>
+ * @author Cesar Aguilera
  * @version 2015-09-20
  * @see <a href="http://openweathermap.org/">OpenWeatherMap.org</a>
  * @see <a href="http://openweathermap.org/api">OpenWeatherMap.org API</a>

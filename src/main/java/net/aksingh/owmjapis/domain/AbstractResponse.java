@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2013-2015 Ashutosh Kumar Singh <me@aksingh.net>
- *
+ * Copyright (c) 2015 Cesar Aguilera
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -29,11 +30,12 @@ import java.util.Optional;
 
 /**
  * <p>
- * Provides default behaviours and implementations for the response from OWM.org
+ * Provides default behavior and implementations for the response from OWM.org
  * </p>
  *
  * @author Ashutosh Kumar Singh
- * @version 2014/12/28
+ * @author Cesar Aguilera
+ * @version 2015/09/20
  * @since 2.5.0.3
  */
 abstract class AbstractResponse implements Serializable {
@@ -71,16 +73,16 @@ abstract class AbstractResponse implements Serializable {
 	}
 
 	/**
-	 * @return Response code if available</code>.
+	 * @return Response code if available.
 	 */
-	public Optional<Integer> getResponseCode() {
+	protected Optional<Integer> getResponseCode() {
 		return this.responseCode != Integer.MIN_VALUE ? Optional.of(this.responseCode) : Optional.<Integer> empty();
 	}
 
 	/**
-	 * @return Raw response if available</code>.
+	 * @return Raw response if available.
 	 */
-	public Optional<String> getRawResponse() {
+	protected Optional<String> getRawResponse() {
 		return Optional.ofNullable(this.rawResponse);
 	}
 }

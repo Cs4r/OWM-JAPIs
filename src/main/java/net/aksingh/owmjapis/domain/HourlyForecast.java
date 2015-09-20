@@ -34,20 +34,16 @@ import org.json.JSONObject;
 /**
  * <p>
  * Parses hourly forecast data and provides methods to get/access the same
- * information. This class provides <code>has</code> and <code>get</code>
- * methods to access the information.
+ * information. This class provides <code>get</code> methods to access the
+ * information.
  * </p>
  * <p>
- * <code>has</code> methods can be used to check if the data exists, i.e., if
- * the data was available (successfully downloaded) and was parsed correctly.
- * <code>get</code> methods can be used to access the data, if the data exists,
- * otherwise <code>get</code> methods will give value as per following basis:
- * Boolean: <code>false</code> Integral: Minimum value (MIN_VALUE) Floating
- * point: Not a number (NaN) Others: <code>null</code>
+ * <code>get</code> methods can be used to retrieve the data if it exists.
  * </p>
- *
+ * 
  * @author Ashutosh Kumar Singh
- * @version 2014/12/27
+ * @author Cesar Aguilera
+ * @version 2015/09/20
  * @see <a href="http://openweathermap.org/forecast">OWM's Weather Forecast
  *      API</a>
  * @since 2.5.0.3
@@ -91,16 +87,17 @@ public class HourlyForecast extends AbstractForecast {
 	 * <p>
 	 * Parses forecast data (one element in the forecastList) and provides
 	 * methods to get/access the same information. This class provides
-	 * <code>has</code> and <code>get</code> methods to access the information.
+	 * <code>get</code> methods to access the information.
 	 * </p>
 	 * <p>
-	 * <code>has</code> methods can be used to check if the data exists, i.e.,
-	 * if the data was available (successfully downloaded) and was parsed
-	 * correctly. <code>get</code> methods can be used to access the data, if
-	 * the data exists, otherwise <code>get</code> methods will give value as
-	 * per following basis: Boolean: <code>false</code> Integral: Minimum value
-	 * (MIN_VALUE) Floating point: Not a number (NaN) Others: <code>null</code>
+	 * <code>get</code> methods can be used to retrieve the data if it exists.
 	 * </p>
+	 *
+	 *
+	 * @author Ashutosh Kumar Singh
+	 * @author Cesar Aguilera
+	 * @version 2015/09/20
+	 * @since 2.5.0.3
 	 */
 	public static class Forecast extends AbstractForecast.Forecast {
 		/*
@@ -175,21 +172,18 @@ public class HourlyForecast extends AbstractForecast {
 		/**
 		 * <p>
 		 * Parses clouds data and provides methods to get/access the same
-		 * information. This class provides <code>has</code> and
-		 * <code>get</code> methods to access the information.
+		 * information. This class provides <code>get</code> methods to access
+		 * the information.
 		 * </p>
 		 * <p>
-		 * <code>has</code> methods can be used to check if the data exists,
-		 * i.e., if the data was available (successfully downloaded) and was
-		 * parsed correctly. <code>get</code> methods can be used to access the
-		 * data, if the data exists, otherwise <code>get</code> methods will
-		 * give value as per following basis: Boolean: <code>false</code>
-		 * Integral: Minimum value (MIN_VALUE) Floating point: Not a number
-		 * (NaN) Others: <code>null</code>
+		 * <code>get</code> methods can be used to retrieve the data if it
+		 * exists.
 		 * </p>
 		 *
+		 *
 		 * @author Ashutosh Kumar Singh
-		 * @version 2014/12/26
+		 * @author Cesar Aguilera
+		 * @version 2015/09/20
 		 * @since 2.5.0.1
 		 */
 		public static class Clouds extends AbstractForecast.Forecast.Clouds {
@@ -206,22 +200,19 @@ public class HourlyForecast extends AbstractForecast {
 		/**
 		 * <p>
 		 * Parses main data and provides methods to get/access the same
-		 * information. This class provides <code>has</code> and
-		 * <code>get</code> methods to access the information.
+		 * information. This class provides <code>get</code> methods to access
+		 * the information.
 		 * </p>
 		 * <p>
-		 * <code>has</code> methods can be used to check if the data exists,
-		 * i.e., if the data was available (successfully downloaded) and was
-		 * parsed correctly. <code>get</code> methods can be used to access the
-		 * data, if the data exists, otherwise <code>get</code> methods will
-		 * give value as per following basis: Boolean: <code>false</code>
-		 * Integral: Minimum value (MIN_VALUE) Floating point: Not a number
-		 * (NaN) Others: <code>null</code>
+		 * <code>get</code> methods can be used to retrieve the data if it
+		 * exists.
 		 * </p>
 		 *
+		 *
 		 * @author Ashutosh Kumar Singh
-		 * @version 2014/12/26
-		 * @since 2.5.0.1
+		 * @author Cesar Aguilera
+		 * @version 2015/09/20
+		 * @since 2.5.0.3
 		 */
 		public static class Main extends AbstractForecast.Forecast.Main {
 			private static final String JSON_MAIN_SEA_LEVEL = "sea_level";
@@ -266,21 +257,18 @@ public class HourlyForecast extends AbstractForecast {
 		/**
 		 * <p>
 		 * Parses sys data and provides methods to get/access the same
-		 * information. This class provides <code>has</code> and
-		 * <code>get</code> methods to access the information.
+		 * information. This class provides <code>get</code> methods to access
+		 * the information.
 		 * </p>
 		 * <p>
-		 * <code>has</code> methods can be used to check if the data exists,
-		 * i.e., if the data was available (successfully downloaded) and was
-		 * parsed correctly. <code>get</code> methods can be used to access the
-		 * data, if the data exists, otherwise <code>get</code> methods will
-		 * give value as per following basis: Boolean: <code>false</code>
-		 * Integral: Minimum value (MIN_VALUE) Floating point: Not a number
-		 * (NaN) Others: <code>null</code>
+		 * <code>get</code> methods can be used to retrieve the data if it
+		 * exists.
 		 * </p>
 		 *
+		 *
 		 * @author Ashutosh Kumar Singh
-		 * @version 2014/12/26
+		 * @author Cesar Aguilera
+		 * @version 2015/09/20
 		 * @since 2.5.0.1
 		 */
 		public static class Sys implements Serializable {
@@ -304,17 +292,7 @@ public class HourlyForecast extends AbstractForecast {
 		/**
 		 * <p>
 		 * Parses wind data and provides methods to get/access the same
-		 * information. This class provides <code>has</code> and
-		 * <code>get</code> methods to access the information.
-		 * </p>
-		 * <p>
-		 * <code>has</code> methods can be used to check if the data exists,
-		 * i.e., if the data was available (successfully downloaded) and was
-		 * parsed correctly. <code>get</code> methods can be used to access the
-		 * data, if the data exists, otherwise <code>get</code> methods will
-		 * give value as per following basis: Boolean: <code>false</code>
-		 * Integral: Minimum value (MIN_VALUE) Floating point: Not a number
-		 * (NaN) Others: <code>null</code>
+		 * information.
 		 * </p>
 		 *
 		 * @author Ashutosh Kumar Singh

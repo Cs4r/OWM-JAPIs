@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2013-2015 Ashutosh Kumar Singh <me@aksingh.net>
+ * Copyright (c) 2015 Cesar Aguilera
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,23 +35,27 @@ import java.util.Optional;
 
 /**
  * <p>
- * Provides default behaviours and implementations for: 1.
- * {@link net.aksingh.owmjapis.domain.CurrentWeather} It defines common methods
- * like <code>has</code>, <code>get</code> and some others.
+ * Provides default behavior and implementations for:
+ * <ol>
+ * <li>{@link net.aksingh.owmjapis.domain.CurrentWeather}</li>
+ * 
+ * </ol>
+ * It defines common methods like <code>get</code> and some others.
  * </p>
  *
  * @author Ashutosh Kumar Singh
- * @version 2014/12/21
+ * @author Cesar Aguilera
+ * @version 2015/09/20
  * @since 2.5.0.1
  */
 public abstract class AbstractWeather extends AbstractResponse {
 	/*
 	 * JSON Keys
 	 */
-	static final String JSON_CLOUDS = "clouds";
-	static final String JSON_COORD = "coord";
-	static final String JSON_MAIN = "main";
-	static final String JSON_WIND = "wind";
+	protected static final String JSON_CLOUDS = "clouds";
+	protected static final String JSON_COORD = "coord";
+	protected static final String JSON_MAIN = "main";
+	protected static final String JSON_WIND = "wind";
 	private static final String JSON_WEATHER = "weather";
 	private static final String JSON_DATE_TIME = "dt";
 
@@ -98,7 +103,7 @@ public abstract class AbstractWeather extends AbstractResponse {
 	}
 
 	/**
-	 * @return Date and time if available
+	 * @return Date and time if available.
 	 */
 	public Optional<Date> getDateTime() {
 		return Optional.ofNullable(this.dateTime);
@@ -114,7 +119,7 @@ public abstract class AbstractWeather extends AbstractResponse {
 	/**
 	 * @param index
 	 *            Index of Weather instance in the list.
-	 * @return Weather instance if available
+	 * @return Weather instance if available.
 	 */
 	public Optional<Weather> getWeatherInstance(int index) {
 		return index > -1 && index < weatherCount ? Optional.of(this.weatherList.get(index))
@@ -123,11 +128,12 @@ public abstract class AbstractWeather extends AbstractResponse {
 
 	/**
 	 * <p>
-	 * Provides default behaviours for Cloud
+	 * Provides default behavior for Cloud
 	 * </p>
 	 *
 	 * @author Ashutosh Kumar Singh
-	 * @version 2013/12/23
+	 * @author Cesar Aguilera
+	 * @version 2015/09/20
 	 * @since 2.5.0.1
 	 */
 	abstract public static class Clouds implements Serializable {
@@ -144,7 +150,7 @@ public abstract class AbstractWeather extends AbstractResponse {
 		}
 
 		/**
-		 * @return Percentage of all clouds if available
+		 * @return Percentage of all clouds if available.
 		 */
 		public Optional<Float> getPercentageOfClouds() {
 			return !Float.isNaN(this.percentOfClouds) ? Optional.of(this.percentOfClouds) : Optional.<Float> empty();
@@ -153,11 +159,12 @@ public abstract class AbstractWeather extends AbstractResponse {
 
 	/**
 	 * <p>
-	 * Provides default behaviours for Coord, i.e., coordinates.
+	 * Provides default behavior for Coord, i.e., coordinates.
 	 * </p>
 	 *
 	 * @author Ashutosh Kumar Singh
-	 * @version 2013/12/23
+	 * @author Cesar Aguilera
+	 * @version 2015/09/20
 	 * @since 2.5.0.1
 	 */
 	abstract public static class Coord implements Serializable {
@@ -178,14 +185,14 @@ public abstract class AbstractWeather extends AbstractResponse {
 		}
 
 		/**
-		 * @return Latitude of the city if available
+		 * @return Latitude of the city if available.
 		 */
 		public Optional<Float> getLatitude() {
 			return !Float.isNaN(this.lat) ? Optional.of(this.lat) : Optional.<Float> empty();
 		}
 
 		/**
-		 * @return Longitude of the city if available
+		 * @return Longitude of the city if available.
 		 */
 		public Optional<Float> getLongitude() {
 			return !Float.isNaN(this.lon) ? Optional.of(this.lon) : Optional.<Float> empty();
@@ -194,12 +201,13 @@ public abstract class AbstractWeather extends AbstractResponse {
 
 	/**
 	 * <p>
-	 * Provides default behaviours for Main, i.e., main weather elements like
+	 * Provides default behavior for Main, i.e., main weather elements like
 	 * temperature, humidity, etc.
 	 * </p>
 	 *
 	 * @author Ashutosh Kumar Singh
-	 * @version 2013/12/23
+	 * @author Cesar Aguilera
+	 * @version 2015/09/20
 	 * @since 2.5.0.1
 	 */
 	abstract public static class Main implements Serializable {
@@ -233,35 +241,35 @@ public abstract class AbstractWeather extends AbstractResponse {
 		}
 
 		/**
-		 * @return Temperature of the city if available
+		 * @return Temperature of the city if available.
 		 */
 		public Optional<Float> getTemperature() {
 			return !Float.isNaN(this.temp) ? Optional.of(this.temp) : Optional.<Float> empty();
 		}
 
 		/**
-		 * @return Minimum temperature of the city if available
+		 * @return Minimum temperature of the city if available.
 		 */
 		public Optional<Float> getMinTemperature() {
 			return !Float.isNaN(this.minTemp) ? Optional.of(this.minTemp) : Optional.<Float> empty();
 		}
 
 		/**
-		 * @return Maximum temperature of the city if available
+		 * @return Maximum temperature of the city if available.
 		 */
 		public Optional<Float> getMaxTemperature() {
 			return !Float.isNaN(this.maxTemp) ? Optional.of(this.maxTemp) : Optional.<Float> empty();
 		}
 
 		/**
-		 * @return Pressure of the city if available
+		 * @return Pressure of the city if available.
 		 */
 		public Optional<Float> getPressure() {
 			return !Float.isNaN(this.pressure) ? Optional.of(this.pressure) : Optional.<Float> empty();
 		}
 
 		/**
-		 * @return Humidity of the city if available
+		 * @return Humidity of the city if available.
 		 */
 		public Optional<Float> getHumidity() {
 			return !Float.isNaN(this.humidity) ? Optional.of(this.humidity) : Optional.<Float> empty();
@@ -271,20 +279,16 @@ public abstract class AbstractWeather extends AbstractResponse {
 	/**
 	 * <p>
 	 * Parses weather data and provides methods to get/access the same
-	 * information. This class provides <code>has</code> and <code>get</code>
-	 * methods to access the information.
+	 * information. This class <code>get</code> methods to access the
+	 * information.
 	 * </p>
 	 * <p>
-	 * <code>has</code> methods can be used to check if the data exists, i.e.,
-	 * if the data was available (successfully downloaded) and was parsed
-	 * correctly. <code>get</code> methods can be used to access the data, if
-	 * the data exists, otherwise <code>get</code> methods will give value as
-	 * per following basis: Boolean: <code>false</code> Integral: Minimum value
-	 * (MIN_VALUE) Floating point: Not a number (NaN) Others: <code>null</code>
+	 * <code>get</code> methods can be used to retrieve the data if it exists.
 	 * </p>
 	 *
 	 * @author Ashutosh Kumar Singh
-	 * @version 2014/12/27
+	 * @author Cesar Aguilera
+	 * @version 2015/09/20
 	 * @since 2.5.0.3
 	 */
 	public static class Weather implements Serializable {
@@ -313,22 +317,21 @@ public abstract class AbstractWeather extends AbstractResponse {
 		}
 
 		/**
-		 * @return Code for weather of the city if available
+		 * @return Code for weather of the city if available.
 		 */
 		public Optional<Integer> getWeatherCode() {
 			return this.id != Integer.MIN_VALUE ? Optional.of(this.id) : Optional.<Integer> empty();
 		}
 
 		/**
-		 * @return Name for weather of the city if available, otherwise
-		 *         <code>null</code>.
+		 * @return Name for weather of the city if available.
 		 */
 		public Optional<String> getWeatherName() {
 			return this.name != null && (!"".equals(this.name)) ? Optional.of(this.name) : Optional.<String> empty();
 		}
 
 		/**
-		 * @return Description for weather of the city if available
+		 * @return Description for weather of the city if available.
 		 */
 		public Optional<String> getWeatherDescription() {
 			return this.description != null && (!"".equals(this.description)) ? Optional.of(this.description)
@@ -336,7 +339,7 @@ public abstract class AbstractWeather extends AbstractResponse {
 		}
 
 		/**
-		 * @return Name of icon for weather of the city if available
+		 * @return Name of icon for weather of the city if available.
 		 */
 		public Optional<String> getWeatherIconName() {
 			return this.icon != null && (!"".equals(this.icon)) ? Optional.of(this.icon) : Optional.<String> empty();
@@ -345,11 +348,12 @@ public abstract class AbstractWeather extends AbstractResponse {
 
 	/**
 	 * <p>
-	 * Provides default behaviours for Wind.
+	 * Provides default behavior for Wind.
 	 * </p>
 	 *
 	 * @author Ashutosh Kumar Singh
-	 * @version 2013/12/23
+	 * @author Cesar Aguilera
+	 * @version 2015/09/20
 	 * @since 2.5.0.1
 	 */
 	abstract public static class Wind implements Serializable {
@@ -370,14 +374,14 @@ public abstract class AbstractWeather extends AbstractResponse {
 		}
 
 		/**
-		 * @return Speed of wind in the city if available
+		 * @return Speed of wind in the city if available.
 		 */
 		public Optional<Float> getWindSpeed() {
 			return !Float.isNaN(this.speed) ? Optional.of(this.speed) : Optional.<Float> empty();
 		}
 
 		/**
-		 * @return Degree of wind in the city if available
+		 * @return Degree of wind in the city if available.
 		 */
 		public Optional<Float> getWindDegree() {
 			return !Float.isNaN(this.degree) ? Optional.of(this.degree) : Optional.<Float> empty();

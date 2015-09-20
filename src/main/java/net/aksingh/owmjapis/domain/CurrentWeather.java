@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2013-2015 Ashutosh Kumar Singh <me@aksingh.net>
+ * Copyright (c) 2015 Cesar Aguilera
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,20 +32,16 @@ import org.json.JSONObject;
 /**
  * <p>
  * Parses current weather data and provides methods to get/access the same
- * information. This class provides <code>has</code> and <code>get</code>
- * methods to access the information.
+ * information. This class provides <code>get</code> methods to access the
+ * information.
  * </p>
  * <p>
- * <code>has</code> methods can be used to check if the data exists, i.e., if
- * the data was available (successfully downloaded) and was parsed correctly.
- * <code>get</code> methods can be used to access the data, if the data exists,
- * otherwise <code>get</code> methods will give value as per following basis:
- * Boolean: <code>false</code> Integral: Minimum value (MIN_VALUE) Floating
- * point: Not a number (NaN) Others: <code>null</code>
+ * <code>get</code> methods can be used to retrieve the data if it exists.
  * </p>
  *
  * @author Ashutosh Kumar Singh
- * @version 2014/12/26
+ * @author Cesar Aguilera
+ * @version 2015/09/20
  * @see <a href="http://openweathermap.org/current">OWM's Current Weather
  *      API</a>
  * @since 2.5.0.1
@@ -108,21 +105,21 @@ public class CurrentWeather extends AbstractWeather {
 	}
 
 	/**
-	 * @return Base station if available
+	 * @return Base station if available.
 	 */
 	public Optional<String> getBaseStation() {
 		return this.base != null && (!"".equals(this.base)) ? Optional.of(this.base) : Optional.<String> empty();
 	}
 
 	/**
-	 * @return City code if available
+	 * @return City code if available.
 	 */
 	public Optional<Long> getCityCode() {
 		return this.cityId != Long.MIN_VALUE ? Optional.of(this.cityId) : Optional.<Long> empty();
 	}
 
 	/**
-	 * @return City name if available
+	 * @return City name if available.
 	 */
 	public Optional<String> getCityName() {
 		return this.cityName != null && (!"".equals(this.cityName)) ? Optional.of(this.cityName)
@@ -130,49 +127,49 @@ public class CurrentWeather extends AbstractWeather {
 	}
 
 	/**
-	 * @return Clouds instance if available
+	 * @return Clouds instance if available.
 	 */
 	public Optional<Clouds> getCloudsInstance() {
 		return Optional.ofNullable(this.clouds);
 	}
 
 	/**
-	 * @return Coord instance if available
+	 * @return Coord instance if available.
 	 */
 	public Optional<Coord> getCoordInstance() {
 		return Optional.ofNullable(this.coord);
 	}
 
 	/**
-	 * @return Main instance if available
+	 * @return Main instance if available.
 	 */
 	public Optional<Main> getMainInstance() {
 		return Optional.ofNullable(this.main);
 	}
 
 	/**
-	 * @return Rain instance if available
+	 * @return Rain instance if available.
 	 */
 	public Optional<Rain> getRainInstance() {
 		return Optional.ofNullable(this.rain);
 	}
 
 	/**
-	 * @return Snow instance if available
+	 * @return Snow instance if available.
 	 */
 	public Optional<Snow> getSnowInstance() {
 		return Optional.ofNullable(this.snow);
 	}
 
 	/**
-	 * @return Sys instance if available
+	 * @return Sys instance if available.
 	 */
 	public Optional<Sys> getSysInstance() {
 		return Optional.ofNullable(this.sys);
 	}
 
 	/**
-	 * @return Wind instance if available
+	 * @return Wind instance if available.
 	 */
 	public Optional<Wind> getWindInstance() {
 		return Optional.ofNullable(this.wind);
@@ -181,20 +178,16 @@ public class CurrentWeather extends AbstractWeather {
 	/**
 	 * <p>
 	 * Parses clouds data and provides methods to get/access the same
-	 * information. This class provides <code>has</code> and <code>get</code>
-	 * methods to access the information.
+	 * information. This class provides <code>get</code> methods to access the
+	 * information.
 	 * </p>
 	 * <p>
-	 * <code>has</code> methods can be used to check if the data exists, i.e.,
-	 * if the data was available (successfully downloaded) and was parsed
-	 * correctly. <code>get</code> methods can be used to access the data, if
-	 * the data exists, otherwise <code>get</code> methods will give value as
-	 * per following basis: Boolean: <code>false</code> Integral: Minimum value
-	 * (MIN_VALUE) Floating point: Not a number (NaN) Others: <code>null</code>
+	 * <code>get</code> methods can be used to retrieve the data if it exists.
 	 * </p>
 	 *
 	 * @author Ashutosh Kumar Singh
-	 * @version 2014/12/26
+	 * @author Cesar Aguilera
+	 * @version 2015/09/20
 	 * @since 2.5.0.1
 	 */
 	public static class Clouds extends AbstractWeather.Clouds {
@@ -215,16 +208,12 @@ public class CurrentWeather extends AbstractWeather {
 	 * methods to access the information.
 	 * </p>
 	 * <p>
-	 * <code>has</code> methods can be used to check if the data exists, i.e.,
-	 * if the data was available (successfully downloaded) and was parsed
-	 * correctly. <code>get</code> methods can be used to access the data, if
-	 * the data exists, otherwise <code>get</code> methods will give value as
-	 * per following basis: Boolean: <code>false</code> Integral: Minimum value
-	 * (MIN_VALUE) Floating point: Not a number (NaN) Others: <code>null</code>
+	 * <code>get</code> methods can be used to retrieve the data if it exists.
 	 * </p>
 	 *
 	 * @author Ashutosh Kumar Singh
-	 * @version 2014/12/26
+	 * @author Cesar Aguilera
+	 * @version 2015/09/20
 	 * @since 2.5.0.1
 	 */
 	public static class Coord extends AbstractWeather.Coord {
@@ -241,20 +230,15 @@ public class CurrentWeather extends AbstractWeather {
 	/**
 	 * <p>
 	 * Parses main data and provides methods to get/access the same information.
-	 * This class provides <code>has</code> and <code>get</code> methods to
-	 * access the information.
+	 * This class provides <code>get</code> methods to access the information.
 	 * </p>
 	 * <p>
-	 * <code>has</code> methods can be used to check if the data exists, i.e.,
-	 * if the data was available (successfully downloaded) and was parsed
-	 * correctly. <code>get</code> methods can be used to access the data, if
-	 * the data exists, otherwise <code>get</code> methods will give value as
-	 * per following basis: Boolean: <code>false</code> Integral: Minimum value
-	 * (MIN_VALUE) Floating point: Not a number (NaN) Others: <code>null</code>
+	 * <code>get</code> methods can be used to retrieve the data if it exists.
 	 * </p>
 	 *
 	 * @author Ashutosh Kumar Singh
-	 * @version 2014/12/26
+	 * @author Cesar Aguilera
+	 * @version 2015/09/20
 	 * @since 2.5.0.1
 	 */
 	public static class Main extends AbstractWeather.Main {
@@ -271,20 +255,16 @@ public class CurrentWeather extends AbstractWeather {
 	/**
 	 * <p>
 	 * Parses rain data and provides methods to get/access the same information.
-	 * This class provides <code>has</code> and <code>get</code> methods to
-	 * access the information.
+	 * This class provides <code>get</code> methods to access the information.
 	 * </p>
 	 * <p>
-	 * <code>has</code> methods can be used to check if the data exists, i.e.,
-	 * if the data was available (successfully downloaded) and was parsed
-	 * correctly. <code>get</code> methods can be used to access the data, if
-	 * the data exists, otherwise <code>get</code> methods will give value as
-	 * per following basis: Boolean: <code>false</code> Integral: Minimum value
-	 * (MIN_VALUE) Floating point: Not a number (NaN) Others: <code>null</code>
+	 * <code>get</code> methods can be used to retrieve the data if it exists.
 	 * </p>
 	 *
+	 *
 	 * @author Ashutosh Kumar Singh
-	 * @version 2014/12/26
+	 * @author Cesar Aguilera
+	 * @version 2015/09/20
 	 * @since 2.5.0.1
 	 */
 	public static class Rain implements Serializable {
@@ -317,20 +297,16 @@ public class CurrentWeather extends AbstractWeather {
 	/**
 	 * <p>
 	 * Parses snow data and provides methods to get/access the same information.
-	 * This class provides <code>has</code> and <code>get</code> methods to
-	 * access the information.
+	 * This class provides <code>get</code> methods to access the information.
 	 * </p>
 	 * <p>
-	 * <code>has</code> methods can be used to check if the data exists, i.e.,
-	 * if the data was available (successfully downloaded) and was parsed
-	 * correctly. <code>get</code> methods can be used to access the data, if
-	 * the data exists, otherwise <code>get</code> methods will give value as
-	 * per following basis: Boolean: <code>false</code> Integral: Minimum value
-	 * (MIN_VALUE) Floating point: Not a number (NaN) Others: <code>null</code>
+	 * <code>get</code> methods can be used to retrieve the data if it exists.
 	 * </p>
 	 *
+	 *
 	 * @author Ashutosh Kumar Singh
-	 * @version 2015/01/28
+	 * @author Cesar Aguilera
+	 * @version 2015/09/20
 	 * @since 2.5.0.4
 	 */
 	public static class Snow implements Serializable {
@@ -363,20 +339,16 @@ public class CurrentWeather extends AbstractWeather {
 	/**
 	 * <p>
 	 * Parses sys data and provides methods to get/access the same information.
-	 * This class provides <code>has</code> and <code>get</code> methods to
-	 * access the information.
+	 * This class provides <code>get</code> methods to access the information.
 	 * </p>
 	 * <p>
-	 * <code>has</code> methods can be used to check if the data exists, i.e.,
-	 * if the data was available (successfully downloaded) and was parsed
-	 * correctly. <code>get</code> methods can be used to access the data, if
-	 * the data exists, otherwise <code>get</code> methods will give value as
-	 * per following basis: Boolean: <code>false</code> Integral: Minimum value
-	 * (MIN_VALUE) Floating point: Not a number (NaN) Others: <code>null</code>
+	 * <code>get</code> methods can be used to retrieve the data if it exists.
 	 * </p>
 	 *
+	 *
 	 * @author Ashutosh Kumar Singh
-	 * @version 2014/12/26
+	 * @author Cesar Aguilera
+	 * @version 2015/09/20
 	 * @since 2.5.0.1
 	 */
 	public static class Sys implements Serializable {
@@ -454,20 +426,16 @@ public class CurrentWeather extends AbstractWeather {
 	/**
 	 * <p>
 	 * Parses wind data and provides methods to get/access the same information.
-	 * This class provides <code>has</code> and <code>get</code> methods to
-	 * access the information.
+	 * This class provides <code>get</code> methods to access the information.
 	 * </p>
 	 * <p>
-	 * <code>has</code> methods can be used to check if the data exists, i.e.,
-	 * if the data was available (successfully downloaded) and was parsed
-	 * correctly. <code>get</code> methods can be used to access the data, if
-	 * the data exists, otherwise <code>get</code> methods will give value as
-	 * per following basis: Boolean: <code>false</code> Integral: Minimum value
-	 * (MIN_VALUE) Floating point: Not a number (NaN) Others: <code>null</code>
+	 * <code>get</code> methods can be used to retrieve the data if it exists.
 	 * </p>
 	 *
+	 *
 	 * @author Ashutosh Kumar Singh
-	 * @version 2014/12/26
+	 * @author Cesar Aguilera
+	 * @version 2015/09/20
 	 * @since 2.5.0.1
 	 */
 	public static class Wind extends AbstractWeather.Wind {

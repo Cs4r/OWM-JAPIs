@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2013-2015 Ashutosh Kumar Singh <me@aksingh.net>
- * Copyright (c) 2015 Cesar Aguilera (@cs4r)
+ * Copyright (c) 2015 Cesar Aguilera
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,11 +30,12 @@ import org.json.JSONObject;
 
 /**
  * <p>
- * Provides default behaviours and implementations for: 1.
- * {@link net.aksingh.owmjapis.domain.HourlyForecast} 2.
- * {@link net.aksingh.owmjapis.domain.DailyForecast} It defines common methods
- * like <code>has</code>, <code>get</code> and some others.
+ * Provides default behavior and implementations for:
  * </p>
+ * <ol>
+ * <li>{@link net.aksingh.owmjapis.domain.HourlyForecast}</li>
+ * <li>{@link net.aksingh.owmjapis.domain.DailyForecast}</li>
+ * </ol>
  *
  * @author Ashutosh Kumar Singh
  * @author Cesar Aguilera
@@ -45,10 +46,10 @@ public abstract class AbstractForecast extends AbstractResponse {
 	/*
 	 * JSON Keys
 	 */
-	static final String JSON_FORECAST_LIST = "list";
-	static final String JSON_MESSAGE = "message";
-	static final String JSON_CITY = "city";
-	static final String JSON_FORECAST_COUNT = "cnt";
+	protected static final String JSON_FORECAST_LIST = "list";
+	protected static final String JSON_MESSAGE = "message";
+	protected static final String JSON_CITY = "city";
+	protected static final String JSON_FORECAST_COUNT = "cnt";
 
 	/*
 	 * Instance variables
@@ -63,7 +64,6 @@ public abstract class AbstractForecast extends AbstractResponse {
 	 */
 	AbstractForecast() {
 		super();
-
 		this.message = Double.NaN;
 		this.forecastCount = 0;
 		this.city = null;
@@ -89,12 +89,12 @@ public abstract class AbstractForecast extends AbstractResponse {
 	/**
 	 * @return Count of forecasts if available, <code>0</code> otherwise.
 	 */
-	public Integer getForecastCount() {
+	public int getForecastCount() {
 		return this.forecastCount;
 	}
 
 	/**
-	 * @return City's instance if available</code>.
+	 * @return City's instance if available.
 	 */
 	public Optional<City> getCityInstance() {
 		return Optional.ofNullable(this.city);
@@ -102,10 +102,11 @@ public abstract class AbstractForecast extends AbstractResponse {
 
 	/**
 	 * <p>
-	 * Provides default behaviours for City
+	 * Provides default behavior for City.
 	 * </p>
 	 *
 	 * @author Ashutosh Kumar Singh
+	 * @author Cesar Aguilera
 	 */
 	public static class City implements Serializable {
 		private static final String JSON_CITY_ID = "id";
@@ -158,7 +159,7 @@ public abstract class AbstractForecast extends AbstractResponse {
 		}
 
 		/**
-		 * @return Coord instance if available.
+		 * @return {@link Coord} instance if available.
 		 */
 		public Optional<Coord> getCoordInstance() {
 			return Optional.ofNullable(this.coord);
@@ -180,19 +181,15 @@ public abstract class AbstractForecast extends AbstractResponse {
 	 * <p>
 	 * Parses forecast data (one element in the forecastList) and provides
 	 * methods to get/access the same information. This class provides
-	 * <code>has</code> and <code>get</code> methods to access the information.
+	 * <code>get</code> methods to access the information.
 	 * </p>
 	 * <p>
-	 * <code>has</code> methods can be used to check if the data exists, i.e.,
-	 * if the data was available (successfully downloaded) and was parsed
-	 * correctly. <code>get</code> methods can be used to access the data, if
-	 * the data exists, otherwise <code>get</code> methods will give value as
-	 * per following basis: Boolean: <code>false</code> Integral: Minimum value
-	 * (MIN_VALUE) Floating point: Not a number (NaN) Others: <code>null</code>
+	 * <code>get</code> methods can be used to retrieve the data if it exists.
 	 * </p>
 	 *
 	 * @author Ashutosh Kumar Singh
-	 * @version 2014/12/27
+	 * @author Cesar Aguilera
+	 * @version 2015/09/20
 	 * @since 2.5.0.3
 	 */
 	public abstract static class Forecast extends AbstractWeather {
