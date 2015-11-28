@@ -40,7 +40,7 @@ public enum OWMLanguage {
 	POLISH("pl"), 
 	FINNISH("fi"), 
 	DUTCH("nl"), 
-	FRENCH("FR"), 
+	FRENCH("fr"), 
 	BULGARIAN("bg"), 
 	SWEDISH("sv"),
 	CHINESE_TRADITIONAL("zh_tw"), 
@@ -52,7 +52,7 @@ public enum OWMLanguage {
 
 	private final String lang;
 
-	OWMLanguage(String lang) {
+	private OWMLanguage(String lang) {
 		this.lang = lang;
 	}
 

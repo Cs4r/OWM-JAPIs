@@ -57,15 +57,11 @@ import net.aksingh.owmjapis.service.impl.OWMWeatherProvider_V_2_5;
  * @see <a href="http://openweathermap.org/api">OpenWeatherMap.org API</a>
  * @since 2.5.0.1
  */
-public class OpenWeatherMap {
-	/*
-	 * Instance Variables
-	 */
+public final class OpenWeatherMap {
 	private OWMWeatherProvider omwWeatherProvider;
-	private OWMUnits units;
-	private OWMLanguage lang;
-	private String apiKey;
-	private ProxyInfo proxyInfo;
+	private final OWMUnits units;
+	private final OWMLanguage lang;
+	private final String apiKey;
 
 	/**
 	 * Constructor
@@ -114,9 +110,30 @@ public class OpenWeatherMap {
 		this.apiKey = apiKey;
 	}
 
-	/*
-	 * Getters
+	/**
+	 * Constructor
+	 *
+	 * @param units
+	 *            Any constant from Units
+	 * @param lang
+	 *            Any constant from Language
+	 * @param apiKey
+	 *            API key from OWM.org
+	 * @param proxyInfo
+	 *            Proxy and authentication details for getting data from OWM.org
+	 * @see net.aksingh.owmjapis.service.OWMUnits
+	 * @see net.aksingh.owmjapis.service.OWMLanguage
+	 * @see <a href="http://openweathermap.org/current#multi">OWM.org's
+	 *      Multilingual support</a>
+	 * @see <a href="http://openweathermap.org/appid">OWM.org's API Key</a>
 	 */
+	public OpenWeatherMap(OWMUnits units, OWMLanguage lang, String apiKey, ProxyInfo proxyInfo) {
+		this.omwWeatherProvider = new OWMWeatherProvider_V_2_5(units, lang, apiKey, proxyInfo);
+		this.units = units;
+		this.lang = lang;
+		this.apiKey = apiKey;
+	}
+
 	public String getApiKey() {
 		return apiKey;
 	}
@@ -127,90 +144,6 @@ public class OpenWeatherMap {
 
 	public OWMLanguage getLang() {
 		return lang;
-	}
-
-	/*
-	 * Setters
-	 */
-
-	/**
-	 * Set units for getting data from OWM.org
-	 *
-	 * @param units
-	 *            Any constant from Units
-	 * @see net.aksingh.owmjapis.service.OWMUnits
-	 */
-	public void setUnits(OWMUnits units) {
-		if (proxyInfo != null) {
-			omwWeatherProvider = new OWMWeatherProvider_V_2_5(units, lang, apiKey, proxyInfo);
-		} else {
-			omwWeatherProvider = new OWMWeatherProvider_V_2_5(units, lang, apiKey);
-		}
-		this.units = units;
-	}
-
-	/**
-	 * Set language for getting data from OWM.org
-	 *
-	 * @param lang
-	 *            Any constant from Language
-	 * @see net.aksingh.owmjapis.service.OWMLanguage
-	 * @see <a href="http://openweathermap.org/current#multi">OWM.org's
-	 *      Multilingual support</a>
-	 */
-	public void setLang(OWMLanguage lang) {
-		if (proxyInfo != null) {
-			omwWeatherProvider = new OWMWeatherProvider_V_2_5(units, lang, apiKey, proxyInfo);
-		} else {
-			omwWeatherProvider = new OWMWeatherProvider_V_2_5(units, lang, apiKey);
-		}
-		this.lang = lang;
-	}
-
-	/**
-	 * Set API key for getting data from OWM.org
-	 *
-	 * @param apiKey
-	 *            API key from OWM.org
-	 * @see <a href="http://openweathermap.org/appid">OWM.org's API Key</a>
-	 */
-	public void setApiKey(String apiKey) {
-		if (proxyInfo != null) {
-			omwWeatherProvider = new OWMWeatherProvider_V_2_5(units, lang, apiKey, proxyInfo);
-		} else {
-			omwWeatherProvider = new OWMWeatherProvider_V_2_5(units, lang, apiKey);
-		}
-		this.apiKey = apiKey;
-	}
-
-	/**
-	 * Set proxy for getting data from OWM.org
-	 *
-	 * @param ip
-	 *            IP address of the proxy
-	 * @param port
-	 *            Port address of the proxy
-	 */
-	public void setProxy(String ip, int port) {
-		proxyInfo = new ProxyInfo(ip, port, null, null);
-		omwWeatherProvider = new OWMWeatherProvider_V_2_5(units, lang, apiKey, proxyInfo);
-	}
-
-	/**
-	 * Set proxy and authentication details for getting data from OWM.org
-	 *
-	 * @param ip
-	 *            IP address of the proxy
-	 * @param port
-	 *            Port address of the proxy
-	 * @param user
-	 *            User name for the proxy if required
-	 * @param pass
-	 *            Password for the proxy if required
-	 */
-	public void setProxy(String ip, int port, String user, String pass) {
-		proxyInfo = new ProxyInfo(ip, port, user, pass);
-		omwWeatherProvider = new OWMWeatherProvider_V_2_5(units, lang, apiKey, proxyInfo);
 	}
 
 	public CurrentWeather currentWeatherByCityName(String cityName) throws WeatherNotFoundException {

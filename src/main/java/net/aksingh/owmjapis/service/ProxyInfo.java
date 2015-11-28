@@ -30,9 +30,21 @@ package net.aksingh.owmjapis.service;
  *
  */
 public class ProxyInfo {
+	/**
+	 * IP address of the proxy
+	 */
 	public final String ip;
+	/**
+	 * Port address of the proxy
+	 */
 	public final int port;
+	/**
+	 * User name for the proxy if required
+	 */
 	public final String user;
+	/**
+	 * Password for the proxy if required
+	 */
 	public final String pass;
 
 	public ProxyInfo(String ip, int port, String user, String pass) {
